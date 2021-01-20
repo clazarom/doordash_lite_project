@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
  * @author Caterina lazaro
  * @version 1.0 Jan 2020
  */
-public class PlaceholderCollectionFragment extends Fragment {
+public class PlaceholderFragment extends Fragment {
     private static final String _TAG = "PH_COLLECTION_FRAGMENT";
 
     protected static final String ARG_SECTION_NUMBER = "section_number";

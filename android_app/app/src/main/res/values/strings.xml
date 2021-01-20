@@ -3,7 +3,10 @@
     <!-- TABS AND PAGES STRINGS -->
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <string name="page_text">WELCOME TO THE PAGE</string>
+    <string name="page_text">Welcome to the page </string>
+
+    <!-- RESTAURANT LIST FRAGMENT STRINGS-->
+    <string name="refresh_text">Refresh</string>
 
 
 </resources>

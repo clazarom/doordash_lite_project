@@ -5,4 +5,9 @@
     <dimen name="appbar_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
+    <!-- Restaurant's list -->
+    <dimen name="rest_item_height">100dp</dimen>
+    <dimen name="rest_list_height">400dp</dimen>
+
 </resources>

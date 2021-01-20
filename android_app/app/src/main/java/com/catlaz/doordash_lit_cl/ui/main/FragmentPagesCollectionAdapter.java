@@ -8,12 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import static com.catlaz.doordash_lit_cl.ui.main.PlaceholderCollectionFragment.ARG_SECTION_NUMBER;
+import static com.catlaz.doordash_lit_cl.ui.main.PlaceholderFragment.ARG_SECTION_NUMBER;
 
-public class PageCollectionAdapter extends FragmentStateAdapter {
+public class FragmentPagesCollectionAdapter extends FragmentStateAdapter {
     List<Fragment> pagesList;
 
-    public PageCollectionAdapter(@NonNull Fragment fragment, List<Fragment> pagesList) {
+    public FragmentPagesCollectionAdapter(@NonNull Fragment fragment, List<Fragment> pagesList) {
         super(fragment);
         this.pagesList = pagesList;
     }
