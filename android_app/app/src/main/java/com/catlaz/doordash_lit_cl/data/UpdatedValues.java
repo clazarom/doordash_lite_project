@@ -44,6 +44,8 @@ public class UpdatedValues {
     }
 
     //Getters and Setters
-    public void setRestaurantList (List<Restaurant> restaurantList){this.restaurantList = restaurantList;}
+    public void setRestaurantList (List<Restaurant> restaurantList){this.restaurantList.addAll(restaurantList);}
     public List<Restaurant> getRestaurantList(){ return restaurantList;}
+    //Consume items in retaurant list
+    public void cleanRestaurantList(){ restaurantList.clear();}
 }

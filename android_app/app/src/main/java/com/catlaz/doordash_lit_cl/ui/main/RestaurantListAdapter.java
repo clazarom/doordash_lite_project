@@ -33,7 +33,7 @@ public class RestaurantListAdapter extends BaseAdapter {
     public void updateRestaurantList (List<Restaurant> list){
         Log.d(_TAG, "Update list: "+list.size());
         restaurantsList.addAll(list);
-        //notifyDataSetChanged(); //update change
+        notifyDataSetChanged(); //update change
 
     }
 

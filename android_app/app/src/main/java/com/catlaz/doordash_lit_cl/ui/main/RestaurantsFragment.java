@@ -1,7 +1,12 @@
 package com.catlaz.doordash_lit_cl.ui.main;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,11 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ScrollView;
-
 import com.catlaz.doordash_lit_cl.BuildConfig;
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
+import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
 
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * A fragment containing a list of restaurants close to DoorDash HQ (37.422740, -122.139956)
@@ -37,7 +42,8 @@ public class RestaurantsFragment extends Fragment {
     private RestaurantListAdapter rListAdapter;
 
     //Connect to DoorDash server
-    static final RestClient restClient = new RestClient();;
+    private RestClient restClient;
+    private UpdatesReceiver receiver;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -62,12 +68,21 @@ public class RestaurantsFragment extends Fragment {
         Button refreshButton = view.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(buttonOnClickListener);
 
+        //RestClient
+        restClient= new RestClient(getContext());
+        receiver = new UpdatesReceiver(new Handler(), rListAdapter); // Create the receiver
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+
     }
 
     @Override
     public void onDestroy(){
         //Clean remote disposables
         restClient.destroyDisposables();
+
+        //Unregister Receiver
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
+
 
         super.onDestroy();
     }
@@ -83,8 +98,8 @@ public class RestaurantsFragment extends Fragment {
     //Refresh button on click listener: refresh list
     View.OnClickListener buttonOnClickListener = view -> {
         //1. Update with MOCK Restaurants list
-        if (BuildConfig.DEBUG) {
-            List<Restaurant> restaurantList = new ArrayList<Restaurant>();
+        if (BuildConfig.DEBUG_MODE) {
+            List<Restaurant> restaurantList = new ArrayList<>();
             restaurantList.add(new Restaurant(1, "katsu burguer", "burguers, korean", "url"));
             restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
             restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
@@ -116,4 +131,56 @@ public class RestaurantsFragment extends Fragment {
         }
         return false;
     };
+
+
+    /* *******************************************************************************
+        BROADCAST RECEIVER: Update UI
+     */
+    public static class UpdatesReceiver extends BroadcastReceiver {
+        private static String _TAG = "UPDATES_BROADCAST_RECEIVER";
+        //Handler
+        private final Handler handler; // to execute code on the UI thread
+        private final RestaurantListAdapter restaurantListAdapter; //listview to update
+
+        /**
+         * Constructor default
+         */
+        public UpdatesReceiver(){
+            handler = new Handler();
+            restaurantListAdapter = null;
+        }
+
+        /**
+         * Constructor
+         * @param handler handler
+         */
+        public UpdatesReceiver(Handler handler, RestaurantListAdapter restaurantListAdapter) {
+            this.handler = handler;
+            this.restaurantListAdapter = restaurantListAdapter;
+        }
+
+        /**
+         * Callback when an intent is received
+         * @param context context
+         * @param intent intent
+         */
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            Log.d(_TAG, "Message received");
+            // Post the UI updating code to our Handler
+            boolean updated = intent.getBooleanExtra("updated", false);
+
+            if (updated && restaurantListAdapter!=null)
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    //Update UI
+                    restaurantListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList());
+                    //Consume updated values
+                    UpdatedValues.Instance().cleanRestaurantList();
+                }
+            });
+        }
+    }
+
 }

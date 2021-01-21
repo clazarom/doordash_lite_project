@@ -2,6 +2,9 @@ package com.catlaz.doordash_lit_cl.remote;
 
 
 import android.util.Log;
+
+import com.catlaz.doordash_lit_cl.BuildConfig;
+
 import javax.net.ssl.HostnameVerifier;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -39,19 +42,26 @@ public class HttpClient{
      *
      */
     private void initializeHttpClient(){
-        //Interceptor for logging  <TODO> use on debug only
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        Log.d(_TAG, "Create http client");
         okHttpClient = new OkHttpClient();
-        okHttpClient = okHttpClient.newBuilder()
-                .addInterceptor(interceptor)
-                .hostnameVerifier(hostnameVerifier).build();
+
+        //1. Set up the client's parameters
+        OkHttpClient.Builder httpBuilder = okHttpClient.newBuilder()
+                .hostnameVerifier(hostnameVerifier);
+        //Interceptor for logging  <TODO> use on debug only
+        if (BuildConfig.DEBUG_MODE) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.level(HttpLoggingInterceptor.Level.BODY);
+            httpBuilder.addInterceptor(interceptor);
+        }
+        //2. Build http client
+        okHttpClient =  httpBuilder.build();
 
     }
 
     /**
      * Getter for the OkHttpClient
-     * @return
+     * @return httpClient
      */
     protected OkHttpClient getOkHttpClient(){ return okHttpClient; }
 
@@ -59,7 +69,7 @@ public class HttpClient{
     // HOSTNAME VERIFIER - perform a simple comparison of remote hostname and local value
     private final HostnameVerifier hostnameVerifier = (hostname, session) -> {
         Log.d(_TAG, "Host name verifier: " + hostname + " - " + session.getPeerHost());
-        //TODO:Some logic to verify your host and set value
+        //<TODO> Some logic to verify your host and set value
         return SERVER_HOST_NAME.equals(hostname)
                 && SERVER_HOST_NAME.equals(session.getPeerHost());
     };
