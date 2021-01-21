@@ -92,6 +92,8 @@ public class RestaurantsFragment extends Fragment {
      */
     // Restaurants list on item click listener
     AdapterView.OnItemClickListener listOnItemClickListener = (adapterView, view, i, l) -> {
+        Log.v(_TAG, "onItemClick view restaurants_list");
+
         //<TODO>
     };
 

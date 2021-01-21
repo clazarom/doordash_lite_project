@@ -80,13 +80,17 @@ public class RestaurantListAdapter extends BaseAdapter {
 
         //UPDATE DATA WITH RESTAURANT INFO
         Restaurant restaurant = restaurantsList.get(position);
-        //Add the name of the restaurant
-        TextView restaurantName =  convertView.findViewById(R.id.restaurant_name);
-        restaurantName.setText(restaurant.getName());
-
         //Add the thumbnail image -- user Bitmap
         ImageView image = convertView.findViewById(R.id.restaurant_image_thumb);
         image.setImageBitmap(restaurantImagesMap.get(restaurant.getId()));
+        //Add the name of the restaurant
+        TextView restaurantName =  convertView.findViewById(R.id.restaurant_name);
+        restaurantName.setText(restaurant.getName());
+        //Add description of the restaurant
+        TextView restauranDescription =  convertView.findViewById(R.id.restaurant_description);
+        restauranDescription.setText(restaurant.getDescription());
+
+
 
         return convertView;
     }
