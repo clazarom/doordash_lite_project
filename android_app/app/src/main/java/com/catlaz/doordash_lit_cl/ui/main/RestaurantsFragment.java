@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
+import com.catlaz.doordash_lit_cl.remote.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,9 @@ public class RestaurantsFragment extends Fragment {
     //Restaurants list adapter
     private RestaurantListAdapter rListAdapter;
 
+    //Connect to DoorDash server
+    static final RestClient restClient = new RestClient();;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class RestaurantsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_page_restaurants, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -58,6 +63,14 @@ public class RestaurantsFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy(){
+        //Clean remote disposables
+        restClient.destroyDisposables();
+
+        super.onDestroy();
+    }
+
     /* ************************************************
        LISTENERS
      */
@@ -68,7 +81,9 @@ public class RestaurantsFragment extends Fragment {
 
     //Refresh button on click listener: refresh list
     View.OnClickListener buttonOnClickListener = view -> {
-        //<TODO>
+        //1. Get restaurants from Doordash server on a separate Thread:
+        new Thread(() -> restClient.mockReqCallToDoordash()).start();
+
         //Update with MOCK Restaurants list
         List<Restaurant> restaurantList = new ArrayList<Restaurant>();
         restaurantList.add(new Restaurant(1, "katsu burguer", "burguers, korean", "url"));
