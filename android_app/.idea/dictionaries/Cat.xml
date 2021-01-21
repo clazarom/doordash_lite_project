@@ -2,6 +2,7 @@
   <dictionary name="Cat">
     <words>
       <w>gson</w>
+      <w>shortname</w>
     </words>
   </dictionary>
 </component>

@@ -9,11 +9,19 @@ public class Restaurant {
     private String cover_img_url; //restaurant thumbnail url
 
     //Other fields
+    private String display_delivery_fee;
+    private int yelp_review_count;
+    private double average_rating;
+    private double number_of_ratings;
+
+    private boolean offers_pickup;
+    private double delivery_fee;
+
     private boolean is_consumer_subscription_eligible;
     private double promotion_delivery_fee;
-    private double delivery_fee;
-    private DeliveryFeeMonetaryFields delivery_fee_monetary_field;
     private int num_ratings;
+    private Address address;
+    private int price_range;
 
 
     public Restaurant (int id, String name, String description, String cover_img_url){

@@ -27,13 +27,14 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * A fragment containing a list of restaurants close to DoorDash HQ (37.422740, -122.139956)
  *
  * @author Caterina lazaro
- * @version 1.0 Jan 2020
+ * @version 1.0 Jan 2021
  */
 public class RestaurantsFragment extends Fragment {
     private static final String _TAG = "RESTAURANTS_FRAGMENT";
@@ -93,8 +94,21 @@ public class RestaurantsFragment extends Fragment {
     // Restaurants list on item click listener
     AdapterView.OnItemClickListener listOnItemClickListener = (adapterView, view, i, l) -> {
         Log.v(_TAG, "onItemClick view restaurants_list");
+        //Open another screen with the restaurant's details
+        Bundle bundle = new Bundle();
+        bundle.putString("name", ((Restaurant) rListAdapter.getItem(i)).getName());
+        bundle.putInt("id", ((Restaurant) rListAdapter.getItem(i)).getId());
+        bundle.putString("description", ((Restaurant) rListAdapter.getItem(i)).getDescription());
 
-        //<TODO>
+
+        //Fragment holder initialize
+        final FragmentTransaction ft = getParentFragment().getParentFragmentManager().beginTransaction();
+        DetailFragment mFragment = new DetailFragment();
+        mFragment.setArguments(bundle);
+        ft.replace(R.id.fragemt_placeholder, mFragment, "Detail");
+        ft.addToBackStack(null);
+        ft.commit();
+
     };
 
     //Refresh button on click listener: refresh list
