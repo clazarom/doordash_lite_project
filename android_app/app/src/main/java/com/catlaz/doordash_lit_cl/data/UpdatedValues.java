@@ -30,7 +30,7 @@ public class UpdatedValues {
     /**
      * Access to the data interface
      */
-    public UpdatedValues Instance(){
+    public static UpdatedValues Instance(){
         //Check if initialization is needed
         if (updatedValues == null)
             synchronized (UpdatedValues.class){
@@ -42,4 +42,8 @@ public class UpdatedValues {
         //Return instance
         return updatedValues;
     }
+
+    //Getters and Setters
+    public void setRestaurantList (List<Restaurant> restaurantList){this.restaurantList = restaurantList;}
+    public List<Restaurant> getRestaurantList(){ return restaurantList;}
 }

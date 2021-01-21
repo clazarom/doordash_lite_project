@@ -91,9 +91,8 @@ public class RestaurantsFragment extends Fragment {
             //Update list
             rListAdapter.updateRestaurantList(restaurantList);
         }
-        //2. Get restaurants from Doordash server: separated thread
-        new Thread (() -> restClient.mockReqCallToDoordash()).start();
-
+        //2. Get restaurants from Doordash server: async call
+        restClient.getRestaurantsListByDoordashHQ();
 
 
     };
