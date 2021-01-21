@@ -7,6 +7,6 @@
 
     <!-- RESTAURANT LIST FRAGMENT STRINGS-->
     <string name="refresh_text">Refresh</string>
-
+    <string name="restaurant_i_string"> Image Thumbnail</string>
 
 </resources>

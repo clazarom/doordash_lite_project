@@ -104,10 +104,10 @@ public class RestaurantsFragment extends Fragment {
             restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
             restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
             //Update list
-            rListAdapter.updateRestaurantList(restaurantList);
+            rListAdapter.updateRestaurantList(restaurantList, null);
         }
         //2. Get restaurants from Doordash server: async call
-        restClient.getRestaurantsListByDoordashHQ();
+        restClient.getRestaurantsListByDoorDashHQ();
 
 
     };
@@ -175,9 +175,10 @@ public class RestaurantsFragment extends Fragment {
                 @Override
                 public void run() {
                     //Update UI
-                    restaurantListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList());
+                    restaurantListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList(),
+                            UpdatedValues.Instance().getRestaurantImageMap() );
                     //Consume updated values
-                    UpdatedValues.Instance().cleanRestaurantList();
+                    UpdatedValues.Instance().cleanRestaurants();
                 }
             });
         }

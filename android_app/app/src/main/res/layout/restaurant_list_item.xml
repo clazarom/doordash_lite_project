@@ -4,6 +4,20 @@
     android:layout_height="@dimen/rest_item_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/restaurant_image_thumb"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/rest_item_image_height"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/restaurant_i_string"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/restaurant_name"
+        tools:layout_constraintLeft_creator="0"
+        tools:layout_constraintTop_creator="0" />
     <TextView
         android:id="@+id/restaurant_name"
         android:layout_width="wrap_content"
@@ -13,10 +27,9 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textAllCaps="false"
-        android:text = "@string/page_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/restaurant_image_thumb"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_constraintLeft_creator="0"
         tools:layout_constraintTop_creator="0" />

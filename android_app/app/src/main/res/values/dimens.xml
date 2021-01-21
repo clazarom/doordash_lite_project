@@ -9,5 +9,6 @@
     <!-- Restaurant's list -->
     <dimen name="rest_item_height">100dp</dimen>
     <dimen name="rest_list_height">400dp</dimen>
+    <dimen name = "rest_item_image_height">50dp</dimen>
 
 </resources>

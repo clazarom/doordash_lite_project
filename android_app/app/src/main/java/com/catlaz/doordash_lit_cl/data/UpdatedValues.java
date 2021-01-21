@@ -1,10 +1,19 @@
 package com.catlaz.doordash_lit_cl.data;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Syncrhonous data interface to exchange values between the Internet Thread and UI Thread
+ * Synchronous data interface to exchange values between the Internet Thread and UI Thread
  *
  * @author Caterina Lazaro
  * @version 1.0 Jan 2021
@@ -16,7 +25,8 @@ public class UpdatedValues {
     private static UpdatedValues updatedValues;
 
     //Last downloaded restaurant values
-    private List<Restaurant> restaurantList;
+    private final List<Restaurant> restaurantList;
+    private final Map<Integer, Bitmap> restaurantImagesMap;
 
 
     /**
@@ -25,6 +35,7 @@ public class UpdatedValues {
     private UpdatedValues() {
         //Init restaurant list
         restaurantList = new ArrayList<>();
+        restaurantImagesMap = new HashMap<>();
     }
 
     /**
@@ -43,9 +54,25 @@ public class UpdatedValues {
         return updatedValues;
     }
 
-    //Getters and Setters
-    public void setRestaurantList (List<Restaurant> restaurantList){this.restaurantList.addAll(restaurantList);}
+    /**
+     * Update restaurant's list and compute each restaurants image thumbnail
+     * @param restaurantList list of restaurants
+     */
+    public void updateRestaurants(List<Restaurant> restaurantList, Map<Integer, Bitmap> restaurantImagesMap){
+        this.restaurantList.addAll(restaurantList);
+        this.restaurantImagesMap.putAll(restaurantImagesMap);
+    }
+
+    //Getters
     public List<Restaurant> getRestaurantList(){ return restaurantList;}
-    //Consume items in retaurant list
-    public void cleanRestaurantList(){ restaurantList.clear();}
+    public Map<Integer,Bitmap> getRestaurantImageMap(){ return restaurantImagesMap;}
+
+
+    /**
+     *     Consume items in restaurant list and its image map
+     */
+    public void cleanRestaurants(){
+        restaurantList.clear();
+        restaurantImagesMap.clear();
+    }
 }
