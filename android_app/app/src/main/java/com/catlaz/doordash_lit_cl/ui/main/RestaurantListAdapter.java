@@ -32,18 +32,15 @@ public class RestaurantListAdapter extends BaseAdapter {
 
     public void updateRestaurantList (List<Restaurant> list){
         Log.d(_TAG, "Update list: "+list.size());
-        //Add each value individually to notify the adapter when changed
-        for (int i=0; i<list.size(); i++) {
-            restaurantsList.add(list.get(i));
-            notifyDataSetInvalidated(); //update change
-        }
+        restaurantsList.addAll(list);
+        //notifyDataSetChanged(); //update change
+
     }
 
     public void addItem(Restaurant item){
         Log.d(_TAG, "Add new restaurant: "+item.getId());
         restaurantsList.add(item);
-        notifyDataSetInvalidated(); //update change
-
+        notifyDataSetChanged(); //update change
     }
 
     @Override

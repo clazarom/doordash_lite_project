@@ -7,6 +7,15 @@ public class Restaurant {
     private String name;
     private String description; // type of food
     private String cover_img_url; //restaurant thumbnail url
+    public static final String[] keyFields = {"id", "name", "description", "cover_img_url"};
+
+    //Other key fields
+    private boolean is_consumer_subscription_elegible;
+    private double promotion_delivery_fee;
+    private double delivery_fee;
+    private DeliveryFeeMonetaryFields delivery_fee_monetary_field;
+    private int num_ratings;
+
 
     public Restaurant (int id, String name, String description, String cover_img_url){
         this.id = id;

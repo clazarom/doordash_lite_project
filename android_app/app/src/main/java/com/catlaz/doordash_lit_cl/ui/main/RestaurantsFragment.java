@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+import com.catlaz.doordash_lit_cl.BuildConfig;
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
@@ -81,17 +82,19 @@ public class RestaurantsFragment extends Fragment {
 
     //Refresh button on click listener: refresh list
     View.OnClickListener buttonOnClickListener = view -> {
-        //1. Get restaurants from Doordash server on a separate Thread:
-        new Thread(() -> restClient.mockReqCallToDoordash()).start();
+        //1. Update with MOCK Restaurants list
+        if (BuildConfig.DEBUG) {
+            List<Restaurant> restaurantList = new ArrayList<Restaurant>();
+            restaurantList.add(new Restaurant(1, "katsu burguer", "burguers, korean", "url"));
+            restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
+            restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
+            //Update list
+            rListAdapter.updateRestaurantList(restaurantList);
+        }
+        //2. Get restaurants from Doordash server: separated thread
+        new Thread (() -> restClient.mockReqCallToDoordash()).start();
 
-        //Update with MOCK Restaurants list
-        List<Restaurant> restaurantList = new ArrayList<Restaurant>();
-        restaurantList.add(new Restaurant(1, "katsu burguer", "burguers, korean", "url"));
-        restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
-        restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
 
-        //Update list
-        rListAdapter.updateRestaurantList(restaurantList);
 
     };
 

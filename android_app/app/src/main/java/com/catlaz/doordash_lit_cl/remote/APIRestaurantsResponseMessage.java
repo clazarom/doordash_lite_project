@@ -13,8 +13,31 @@ import java.util.List;
  * @version 1.0 Jan 2021
  */
 public class APIRestaurantsResponseMessage {
-    @SerializedName("stores”")
+    @SerializedName("num_results")
     @Expose
-    List<Restaurant> stores; //latitude
+    private Double num_results; //num of stores
+
+    @SerializedName("is_first_time_user")
+    @Expose
+    private Boolean is_first_time_user;
+
+    @SerializedName("sort_order")
+    @Expose
+    private String sort_order;
+
+    @SerializedName("next_offset")
+    @Expose
+    private Double next_offset;
+
+    @SerializedName("show_list_as_pickup")
+    @Expose
+    private Boolean show_list_as_pickup;
+
+    @SerializedName("stores")
+    @Expose
+    private List<Restaurant> stores;
+
+    //Getter
+    public List<Restaurant> getStores(){ return stores;}
 
 }

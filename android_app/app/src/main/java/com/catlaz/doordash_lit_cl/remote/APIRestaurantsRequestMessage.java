@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 /**
- * Class to instantiate the Request fields sent for a GET store_feed request
+ * POJO (Plain Old Java Object) Class to instantiate the Request fields sent for a GET store_feed request
  *
  * @author Caterina Lazaro
  * @version 1.0 Jan 2021
@@ -13,16 +13,16 @@ import com.google.gson.annotations.SerializedName;
 public class APIRestaurantsRequestMessage {
     @SerializedName("lat")
     @Expose
-    double lat; //latitude
+    private double lat; //latitude
     @SerializedName("lng")
     @Expose
-    double lng; //longitude
+    private double lng; //longitude
     @SerializedName("offset")
     @Expose
-    int offset;
+    private int offset;
     @SerializedName("limit")
     @Expose
-    int limit;
+    private int limit;
 
     @Override
     public String toString(){

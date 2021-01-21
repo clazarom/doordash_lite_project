@@ -20,7 +20,7 @@ public interface ApiInterface {
     //Get list of restaurants close to the location
     // "v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=50";
     //@Headers(RestClient.TOKEN_HEADER+": {token}")
-    @GET("v1/store_feed/?")
+    @GET("v1/store_feed/")
     Call<APIRestaurantsResponseMessage> getRestaurants(
             @Query("lat") double lat,
             @Query("lng") double lng,
