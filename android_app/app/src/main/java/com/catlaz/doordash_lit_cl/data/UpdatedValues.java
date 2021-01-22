@@ -1,12 +1,8 @@
 package com.catlaz.doordash_lit_cl.data;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +57,7 @@ public class UpdatedValues {
      * @param restaurantList list of restaurants
      */
     public void updateRestaurants(List<Restaurant> restaurantList, Map<Integer, Bitmap> restaurantImagesMap){
+        Log.d(_TAG, "Update restaurant list: "+restaurantList.size());
         this.restaurantList.addAll(restaurantList);
         this.restaurantImagesMap.putAll(restaurantImagesMap);
     }
@@ -70,6 +67,7 @@ public class UpdatedValues {
      * @param restaurantDetail restaurant detail
      */
     public void addRestaurantDetail(RestaurantDetail restaurantDetail){
+        Log.d(_TAG, "Add restaurant detail: "+restaurantDetail.getId());
         restaurantDetailsMap.put(restaurantDetail.getId(), restaurantDetail);
     }
 

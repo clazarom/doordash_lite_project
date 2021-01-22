@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Fragment holder initialize
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragemt_placeholder, new MainFragment(), "main_restaurants_fragment"); // Replace the contents of the container with the new fragment
+        ft.replace(R.id.fragment_placeholder, new MainFragment(), "main_restaurants_fragment"); // Replace the contents of the container with the new fragment
         ft.addToBackStack(null);
         ft.commit();
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // This callback will only be called when MyFragment is at least Started.
-    OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+    final OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
         @Override
         public void handleOnBackPressed() {
             Log.d(_TAG, "On back button pressed");

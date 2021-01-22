@@ -1,8 +1,6 @@
 package com.catlaz.doordash_lit_cl;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 

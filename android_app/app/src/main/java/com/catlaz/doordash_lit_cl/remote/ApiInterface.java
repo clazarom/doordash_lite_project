@@ -4,12 +4,11 @@ import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
- * Retrofit API Interface to interact with the server REST API's
+ * Retrofit API Interface to interact with the server REST APIs
  * Tutorial on Retrofit and type of calls:
  * https://futurestud.io/tutorials/retrofit-synchronous-and-asynchronous-requests
  *

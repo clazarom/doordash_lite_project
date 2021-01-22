@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#C4281D</color>
-    <color name="colorPrimaryDark">#E53024</color>
-    <color name="colorAccent">#A8AAAC</color>
+
     <color name="colorBackgroundDarkButton">#000000</color>
     <!-- Standard colors -->
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+<!--    <color name="black">#000000</color>-->
 
     <!-- Theme colors -->
     <color name="darkRed">#C4281D</color>

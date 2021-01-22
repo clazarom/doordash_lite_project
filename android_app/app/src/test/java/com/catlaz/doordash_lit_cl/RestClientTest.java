@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
+import static com.catlaz.doordash_lit_cl.SplashScreen._INIT_REQ_NUM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -41,8 +42,8 @@ public class RestClientTest {
 
     @Test
     public void requestDoorDashRestaurants(){
-        List<Restaurant> rList = restClient.testRestaurantsListByDoorDashHQ();
-        assertEquals(50, rList.size());
+        List<Restaurant> rList = restClient.testRestaurantsListByDoorDashHQ(0, _INIT_REQ_NUM);
+        assertEquals(_INIT_REQ_NUM, rList.size());
     }
 
     @Test

@@ -39,6 +39,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class RestaurantsFragment extends Fragment {
     private static final String _TAG = "RESTAURANTS_FRAGMENT";
 
+    public static final int _REQ_NUM = 10;
+
     //Restaurants list adapter
     private RestaurantListAdapter rListAdapter;
     private ListView restaurantsListView;
@@ -53,7 +55,7 @@ public class RestaurantsFragment extends Fragment {
      * Getter for the list adapter
      * @return restaurant list adapter
      */
-    public RestaurantListAdapter getrListAdapter(){return rListAdapter;}
+    public RestaurantListAdapter getRestaurantListAdapter(){return rListAdapter;}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -78,10 +80,11 @@ public class RestaurantsFragment extends Fragment {
         restaurantsListView.setOnTouchListener(rListOnTouchListener);
         rListAdapter.notifyDataSetChanged();
 
-        //Refresh button
+        //Refresh and load more button
         Button refreshButton = view.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(buttonOnClickListener);
-
+        Button moreButton = view.findViewById(R.id.more_button);
+        moreButton.setOnClickListener(buttonOnClickListener);
         //Loading video
         loadingView = view.findViewById(R.id.loading_image_layout);
         loadingImageGif = view.findViewById(R.id.spin_video);
@@ -103,7 +106,7 @@ public class RestaurantsFragment extends Fragment {
             showRestaurantsList(true);
         }else
             //If not, request from server
-            restClient.getRestaurantsListByDoorDashHQ();
+            restClient.getRestaurantsListByDoorDashHQ(0, _REQ_NUM);
 
     }
 
@@ -153,7 +156,7 @@ public class RestaurantsFragment extends Fragment {
        LISTENERS
      */
     // Restaurants list on item click listener
-    AdapterView.OnItemClickListener listOnItemClickListener = (adapterView, view, i, l) -> {
+    final AdapterView.OnItemClickListener listOnItemClickListener = (adapterView, view, i, l) -> {
         Log.v(_TAG, "onItemClick view restaurants_list");
         //Open another screen with the restaurant's details
         Bundle bundle = new Bundle();
@@ -166,7 +169,7 @@ public class RestaurantsFragment extends Fragment {
         final FragmentTransaction ft = getParentFragment().getParentFragmentManager().beginTransaction();
         DetailFragment mFragment = new DetailFragment();
         mFragment.setArguments(bundle);
-        ft.replace(R.id.fragemt_placeholder, mFragment, "Detail");
+        ft.replace(R.id.fragment_placeholder, mFragment, "Detail");
         ft.addToBackStack(null);
         ft.commit();
 
@@ -177,23 +180,25 @@ public class RestaurantsFragment extends Fragment {
      */
     private void onClickRefresh(){
         //Get restaurants from Doordash server: async call
-        restClient.getRestaurantsListByDoorDashHQ();
+        restClient.getRestaurantsListByDoorDashHQ(0,_REQ_NUM);
         //Clear the listview
         rListAdapter.clearRestaurantList();
-        showRestaurantsList(true);
+        showRestaurantsList(false);
     }
 
     /**
      * Click load more button: get new stores and add them at the end of the list
      */
     private void onClickMore(){
-        //Get restaurants from Doordash server: async call
-        restClient.getRestaurantsListByDoorDashHQ(); // NEW METHOD TO DEVELOP
+        int offset = rListAdapter.getRestaurantsList().size();
+        //Get restaurants from DoorDash server: async call
+        restClient.getRestaurantsListByDoorDashHQ(offset, _REQ_NUM); // NEW METHOD TO DEVELOP
 
     }
 
     //Refresh button on click listener: refresh list
     @SuppressLint("NonConstantResourceId")
+    final
     View.OnClickListener buttonOnClickListener = view -> {
         switch (view.getId()) {
             case R.id.refresh_button:
@@ -208,6 +213,7 @@ public class RestaurantsFragment extends Fragment {
 
     //Touch listener, to allow scrolling on the list
     @SuppressLint("ClickableViewAccessibility")
+    final
     View.OnTouchListener rListOnTouchListener = (view, motionEvent) -> {
         Log.v(_TAG, "onTouch child view restaurants_list");
         // Disallow horizontal touch request for parent scroll, when child onTouch

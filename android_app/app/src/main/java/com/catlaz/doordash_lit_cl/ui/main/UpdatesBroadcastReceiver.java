@@ -14,8 +14,6 @@ import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -39,7 +37,7 @@ public class UpdatesBroadcastReceiver extends BroadcastReceiver {
 
     private TextView telephone;
     private TextView address;
-    private int id;
+    private final int id;
 
 
 
@@ -104,7 +102,7 @@ public class UpdatesBroadcastReceiver extends BroadcastReceiver {
                         UpdatedValues.Instance().getRestaurantImageMap());
                 //Consume updated values
                 UpdatedValues.Instance().cleanRestaurants();
-                //Visibles
+                //Visible
                 listView.setVisibility(View.VISIBLE);
                 loadingView.setVisibility(View.GONE);
             });

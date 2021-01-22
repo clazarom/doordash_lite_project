@@ -35,7 +35,7 @@ public class HttpClient{
 
 
     /**
-     * Initialize the HTTPS clinet by creating an OkHttpClient linked with the
+     * Initialize the HTTPS client by creating an OkHttpClient linked with the
      * - messages interceptor
      * - sslSocketFactory
      * - server's host name verifier

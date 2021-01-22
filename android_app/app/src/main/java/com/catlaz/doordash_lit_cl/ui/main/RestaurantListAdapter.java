@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ListView Adapter for the Restaurants List
+ *
+ * @author Caterina Lazaro
+ * @version 1.0 Jan 2021
+ */
 public class RestaurantListAdapter extends BaseAdapter {
     private static final String _TAG = "RESTAURANT_LIST_ADAPTER";
 
@@ -41,17 +47,15 @@ public class RestaurantListAdapter extends BaseAdapter {
     /**
      * Update values in the restaurant list and its images map
      * @param list restaurants list
-     * @param map images hashmap
+     * @param map images hashMap
      */
     public void updateRestaurantList (List<Restaurant> list, Map<Integer, Bitmap> map){
         Log.d(_TAG, "Update list: "+list.size());
-        if (list.size() > 0) {
+        if (list !=null && list.size() > 0)
             restaurantsList.addAll(list);
+        if(map!=null && map.size() > 0)
             restaurantImagesMap.putAll(map);
-        }
         notifyDataSetChanged(); //update change
-
-
     }
 
     /**
@@ -108,8 +112,8 @@ public class RestaurantListAdapter extends BaseAdapter {
         TextView restaurantName =  convertView.findViewById(R.id.restaurant_name);
         restaurantName.setText(restaurant.getName());
         //Add description of the restaurant
-        TextView restauranDescription =  convertView.findViewById(R.id.restaurant_description);
-        restauranDescription.setText(restaurant.getDescription());
+        TextView restaurantDescription =  convertView.findViewById(R.id.restaurant_description);
+        restaurantDescription.setText(restaurant.getDescription());
 
 
         return convertView;

@@ -26,7 +26,8 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 public class SplashScreen extends AppCompatActivity {
 
     Context mContext;
-    private static final int _SPLASH_DISPLAY_LENGTH = 1000;
+    private static final int _SPLASH_DISPLAY_LENGTH = 5; //seconds
+    public static final int _INIT_REQ_NUM = 50;
 
     /** Called when the activity is first created. */
     @Override
@@ -56,10 +57,10 @@ public class SplashScreen extends AppCompatActivity {
 
                 // close this activity
                 this.finish();
-            }, _SPLASH_DISPLAY_LENGTH);
+            }, _SPLASH_DISPLAY_LENGTH*1000);
 
             //Internet Downloads in advance
-            new RestClient(this).getRestaurantsListByDoorDashHQ();
+            new RestClient(this).getRestaurantsListByDoorDashHQ(0, _INIT_REQ_NUM);
 
         } else {
             Toast.makeText(com.catlaz.doordash_lit_cl.SplashScreen.this, "No Network Service!,Restart the application by switching on the Network Service",

@@ -1,6 +1,12 @@
 package com.catlaz.doordash_lit_cl.data;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@SuppressWarnings("ALL")
 public class Address {
+    @SerializedName("city")
+    @Expose
     private String city;
     private String subpremise;
     private int id;
@@ -15,4 +21,10 @@ public class Address {
 
     @Override
     public String toString(){ return printable_address;}
+
+    public String getAllString(){
+        return shortname+"{city: "+city+", subpremise: "+subpremise+", id: "+id+
+                ", street: "+street+", state: "+state+", zip_code: "+zip_code+
+                ", country: "+country+", latitude:"+lat+", longitude: "+lng+"}";
+    }
 }

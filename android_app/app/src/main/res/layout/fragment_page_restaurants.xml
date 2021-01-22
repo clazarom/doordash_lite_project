@@ -40,7 +40,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/loading_gif_text" />
     </androidx.constraintlayout.widget.ConstraintLayout >
 
     <androidx.constraintlayout.widget.Barrier
@@ -57,7 +58,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layout_constraintTop_toBottomOf="@+id/labelBarrier"
-        app:layout_constraintBottom_toTopOf="@+id/refresh_button"
+        app:layout_constraintBottom_toTopOf="@+id/more_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal" />
@@ -67,7 +68,9 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/refresh_text"
         app:layout_constraintTop_toBottomOf="@+id/bottom_padding"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,9 +84,11 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/more_text"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/bottom_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/refresh_button"

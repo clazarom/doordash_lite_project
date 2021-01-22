@@ -1,17 +1,12 @@
 package com.catlaz.doordash_lit_cl.ui.main;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.VideoView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -33,7 +28,7 @@ public class MainFragment extends Fragment {
     //Fragments <TODO>
     //public static final int NUM_ITEMS = 2;
     private static final List<Fragment> fragmentPages = Collections.unmodifiableList(
-            new ArrayList<Fragment>(){{add(new RestaurantsFragment()); add(new PlaceholderFragment()); }});
+            new ArrayList<Fragment>(){{add(new RestaurantsFragment()); add(new MapFragment()); }});
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2}; // Tab names
     //Pager
@@ -85,7 +80,7 @@ public class MainFragment extends Fragment {
     /* ****************************************
         LISTENERS
      */
-    ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+    final ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -103,6 +98,7 @@ public class MainFragment extends Fragment {
     //Touch listener, to allow scrolling on the child view (list)
 
     @SuppressLint("ClickableViewAccessibility")
+    final
     View.OnTouchListener pagerOnTouchListener = (view, motionEvent) -> {
         Log.v(_TAG, "onItemTouch parent view");
         // Disallow VERTICAL touch request for parent scroll, when child onTouch

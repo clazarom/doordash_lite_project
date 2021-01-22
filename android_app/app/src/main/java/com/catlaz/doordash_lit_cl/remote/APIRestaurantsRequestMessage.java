@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * @author Caterina Lazaro
  * @version 1.0 Jan 2021
  */
+@SuppressWarnings("ALL")
 public class APIRestaurantsRequestMessage {
     @SerializedName("lat")
     @Expose
@@ -26,7 +27,7 @@ public class APIRestaurantsRequestMessage {
 
     @Override
     public String toString(){
-        return "latitute: "+lat+",longitude: "+lng +", offset:"+offset +
+        return "latitude: "+lat+",longitude: "+lng +", offset:"+offset +
                 ", limit: "+limit+", limit"+limit;
     }
 }

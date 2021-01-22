@@ -1,5 +1,6 @@
 package com.catlaz.doordash_lit_cl.data;
 
+@SuppressWarnings("unused")
 public class Restaurant {
 
     //Key fields

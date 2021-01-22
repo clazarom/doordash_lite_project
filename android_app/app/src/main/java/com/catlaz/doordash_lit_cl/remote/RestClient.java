@@ -42,7 +42,7 @@ public class RestClient {
     public static final String _UPDATE_LIST_KEY = "update_list";
     public static final String _UPDATE_DETAIL_KEY = "update_detail";
 
-    //Doordash URL constants
+    //DoorDash URL constants
     public static final String SERVER_HOST_NAME = "api.doordash.com";
     private static final String _DD_URL = "https://api.doordash.com" ;
 
@@ -281,22 +281,25 @@ public class RestClient {
     /**
      * "GET restaurants by DoorDash"
      * API request to obtain a list of restaurants around DoorDash HG
+     * @param offset offset
+     * @param limit limit
      */
-    public void getRestaurantsListByDoorDashHQ() {
+    public void getRestaurantsListByDoorDashHQ(int offset, int limit) {
         Log.d(_TAG, "Call DoorDash request stores");
-        getRestaurantsList("DoorDash", 37.422740, -122.139956, 0, 50);
+        getRestaurantsList("DoorDash", 37.422740, -122.139956, offset, limit);
     }
 
     /**
      * To test "GET restaurants by DoorDash", call synchronous
      * API request to obtain a list of restaurants around DoorDash HG
      *
+     * @param offset offset
+     * @param limit limit
      * @return list of restaurants
      */
-    public List<Restaurant> testRestaurantsListByDoorDashHQ() {
+    public List<Restaurant> testRestaurantsListByDoorDashHQ(int offset, int limit) {
         Log.d(_TAG, "Call test DoorDash request stores");
-        return getRestaurantsListSync("DoorDash", 37.422740, -122.139956, 0, 50);
-
+        return getRestaurantsListSync("DoorDash", 37.422740, -122.139956, offset, limit);
     }
 
     /**
@@ -316,6 +319,7 @@ public class RestClient {
                     Log.d(_TAG, "Successful response from server: " + response.code());
                     //1. Process the response
                     RestaurantDetail rDetail = successfulDetailResponse(response);
+                    Log.i(_TAG, "Received restaurant = "+rDetail.getAddress().getAllString());
                     //Update UI
                     //2. Update Data Interface
                     UpdatedValues.Instance().addRestaurantDetail(rDetail);

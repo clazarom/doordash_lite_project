@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import static com.catlaz.doordash_lit_cl.ui.main.PlaceholderFragment.ARG_SECTION_NUMBER;
+import static com.catlaz.doordash_lit_cl.ui.main.MapFragment.ARG_SECTION_NUMBER;
 
 /**
  * Fragment state adapter to manage the fragment pages (on ViewPager2)
@@ -17,7 +17,7 @@ import static com.catlaz.doordash_lit_cl.ui.main.PlaceholderFragment.ARG_SECTION
  * @version Jan 2021
  */
 public class FragmentPagesCollectionAdapter extends FragmentStateAdapter {
-    List<Fragment> pagesList;
+    final List<Fragment> pagesList;
 
     /**
      * Constructor
