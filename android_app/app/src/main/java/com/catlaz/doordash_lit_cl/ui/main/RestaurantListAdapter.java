@@ -31,6 +31,7 @@ public class RestaurantListAdapter extends BaseAdapter {
      * @param context context
      */
     public RestaurantListAdapter(Context context){
+        Log.d(_TAG, "Create");
         mContext = context;
         restaurantsList = new ArrayList<>();
         restaurantImagesMap = new HashMap<>();
@@ -44,9 +45,12 @@ public class RestaurantListAdapter extends BaseAdapter {
      */
     public void updateRestaurantList (List<Restaurant> list, Map<Integer, Bitmap> map){
         Log.d(_TAG, "Update list: "+list.size());
-        restaurantsList.addAll(list);
-        restaurantImagesMap.putAll(map);
+        if (list.size() > 0) {
+            restaurantsList.addAll(list);
+            restaurantImagesMap.putAll(map);
+        }
         notifyDataSetChanged(); //update change
+
 
     }
 
@@ -77,6 +81,8 @@ public class RestaurantListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup container) {
+        Log.d(_TAG, "Get View");
+
         if (convertView == null) {
             //No view to get: build an empty one
             LayoutInflater  inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

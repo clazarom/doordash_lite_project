@@ -9,4 +9,9 @@
     <string name="refresh_text">Refresh</string>
     <string name="restaurant_i_string"> Image Thumbnail</string>
 
+    <!-- RESTAURANT DETAIL FRAGMENT STRINGS-->
+    <string name="telephone_label_text"> Call: </string>
+    <string name="address_label_text"> Address: </string>
+
+
 </resources>

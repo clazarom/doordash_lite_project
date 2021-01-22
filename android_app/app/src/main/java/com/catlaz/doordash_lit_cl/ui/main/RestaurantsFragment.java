@@ -35,6 +35,7 @@ public class RestaurantsFragment extends Fragment {
     //Restaurants list adapter
     private RestaurantListAdapter rListAdapter;
 
+
     //Connect to DoorDash server
     private RestClient restClient;
     private UpdatesBroadcastReceiver receiver;
@@ -48,6 +49,8 @@ public class RestaurantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d(_TAG, "onCreate");
+
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_page_restaurants, container, false);
     }
@@ -56,13 +59,15 @@ public class RestaurantsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(_TAG, "onViewCreated");
 
         //Set up the restaurants list
+        rListAdapter = new RestaurantListAdapter(getActivity());
         ListView restaurantsListView = view.findViewById(R.id.list_restaurants);
-        rListAdapter = new RestaurantListAdapter(getContext());
         restaurantsListView.setAdapter(rListAdapter);
         restaurantsListView.setOnItemClickListener(listOnItemClickListener);
         restaurantsListView.setOnTouchListener(rListOnTouchListener);
+        rListAdapter.notifyDataSetChanged();
 
         //Refresh button
         Button refreshButton = view.findViewById(R.id.refresh_button);
@@ -77,12 +82,13 @@ public class RestaurantsFragment extends Fragment {
 
     @Override
     public void onDestroy(){
+        Log.d(_TAG, "onDestroy");
         //Clean remote disposables
-        restClient.destroyDisposables();
+        if (restClient != null)
+            restClient.destroyDisposables();
 
         //Unregister Receiver
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
-
 
         super.onDestroy();
     }

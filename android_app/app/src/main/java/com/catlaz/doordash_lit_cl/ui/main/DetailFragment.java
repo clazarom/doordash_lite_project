@@ -6,9 +6,11 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.catlaz.doordash_lit_cl.R;
+import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,10 @@ public class DetailFragment extends Fragment {
     private String name;
     private String description;
 
+    //Communicate with the server
+    private RestClient restClient;
+    UpdatesBroadcastReceiver receiver;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class DetailFragment extends Fragment {
         name = arguments.getString("name", "restaurant");
         description = arguments.getString("description", "");
 
+
         return inflater.inflate(R.layout.fragment_rest_detail, container, false);
     }
 
@@ -46,18 +53,39 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Update UI with info we have received
         //name
         TextView tv = view.findViewById(R.id.restaurant_name_detail);
         tv.setText(name);
         //description
         tv = view.findViewById(R.id.restaurant_description_detail);
         tv.setText(description);
+        //image
+        ImageView image = view.findViewById(R.id.restaurant_image_detail);
+        image.setImageBitmap(UpdatedValues.Instance().getRestaurantImageMap().get(id));
 
         //Use the Restaurant's id to retrieve more data
-        RestClient rClient = new RestClient(getContext());
-        rClient.getRestaurantDetail(id);
-        UpdatesBroadcastReceiver receiver = new UpdatesBroadcastReceiver(new Handler()); // Create the receiver
+        restClient = new RestClient(getContext());
+        restClient.getRestaurantDetail(id);
+        receiver = new UpdatesBroadcastReceiver(new Handler(),
+                (TextView) view.findViewById(R.id.restaurant_telephone_number),
+                (TextView) view.findViewById(R.id.restaurant_address),
+                id); // Create the receiver
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+
+
+    }
+
+    @Override
+    public void onDestroy(){
+        //Clean remote disposables
+        if (restClient != null)
+            restClient.destroyDisposables();
+
+        //Unregister Receiver
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
+
+        super.onDestroy();
     }
 
 }

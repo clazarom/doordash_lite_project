@@ -76,7 +76,7 @@ public class UpdatedValues {
     //Getters
     public List<Restaurant> getRestaurantList(){ return restaurantList;}
     public Map<Integer,Bitmap> getRestaurantImageMap(){ return restaurantImagesMap;}
-    public Map<Integer,Bitmap> getRestaurantDetailMap(){ return restaurantImagesMap;}
+    public Map<Integer,RestaurantDetail> getRestaurantDetailMap(){ return restaurantDetailsMap;}
 
 
     /**
@@ -84,6 +84,5 @@ public class UpdatedValues {
      */
     public void cleanRestaurants(){
         restaurantList.clear();
-        restaurantImagesMap.clear();
     }
 }

@@ -7,6 +7,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ImageView
+        android:id="@+id/restaurant_image_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/restaurant_i_string"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant_name_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_constraintLeft_creator="0"
+        tools:layout_constraintTop_creator="0" />
+
     <TextView
         android:id="@+id/restaurant_name_detail"
         android:layout_width="wrap_content"
@@ -18,7 +36,7 @@
         android:textSize="30sp"
         android:textAllCaps="true"
         android:text = "@string/page_text"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_image_detail"
         app:layout_constraintBottom_toTopOf="@+id/restaurant_image_thumb_detail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +50,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/restaurant_i_string"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant_address_layout"
         app:layout_constraintEnd_toStartOf="@+id/restaurant_description_detail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/restaurant_name_detail"
@@ -50,11 +68,63 @@
         android:textSize="@dimen/rest_item_title_text"
         android:textStyle = "bold"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_name_detail"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant_address_layout"
         app:layout_constraintStart_toEndOf="@+id/restaurant_image_thumb_detail"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_constraintLeft_creator="0"
         tools:layout_constraintTop_creator="0" />
+
+    <LinearLayout
+        android:id="@+id/restaurant_address_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_name_detail"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant_telephone_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_constraintLeft_creator="0"
+        tools:layout_constraintTop_creator="0"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:text="@string/address_label_text"/>
+
+        <TextView
+            android:id="@+id/restaurant_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/restaurant_telephone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_address_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_constraintLeft_creator="0"
+        tools:layout_constraintTop_creator="0"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:text="@string/telephone_label_text"/>
+
+        <TextView
+            android:id="@+id/restaurant_telephone_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
