@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">doordash_lit_cl</string>
+
+    <!-- SPLASH ACTIVITY -->
+    <string name="splash_text">DoorDash LIT(e)</string>
+
     <!-- TABS AND PAGES STRINGS -->
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>

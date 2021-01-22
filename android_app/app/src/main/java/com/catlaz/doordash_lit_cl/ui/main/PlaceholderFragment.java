@@ -41,10 +41,6 @@ public class PlaceholderFragment extends Fragment {
         if (args != null && args.size()>0)
             section = args.getInt(ARG_SECTION_NUMBER, 0);
 
-        //Update the view label
-        String sb = "" + (section+1);
-        TextView sectionLabel = view.findViewById(R.id.section_label);
-        sectionLabel.setText(sb);
     }
 
 }

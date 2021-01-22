@@ -6,6 +6,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
+    <!-- Splash screen dimensions -->
+    <dimen name="splash_text_size">20sp</dimen>
+
     <!-- Restaurant's list -->
     <dimen name="rest_item_height">100dp</dimen>
     <dimen name="rest_list_height">400dp</dimen>
