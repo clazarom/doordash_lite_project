@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Floating  action button <TODO>
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        fab.setOnClickListener(view -> Snackbar.make(view, getResources().getString(R.string.app_my_info), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
     }
 

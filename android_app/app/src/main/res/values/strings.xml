@@ -3,6 +3,9 @@
 
     <!-- SPLASH ACTIVITY -->
     <string name="splash_text">DoorDash LIT(e)</string>
+    <string name="floating_description">Floating info button</string>
+    <!-- MAIN ACTIVITY -->
+    <string name="app_my_info">Thank you for reviewing DoorDahs Lit(e) - built by Caterina Lazaro</string>
 
     <!-- TABS AND PAGES STRINGS -->
     <string name="tab_text_1">Tab 1</string>
