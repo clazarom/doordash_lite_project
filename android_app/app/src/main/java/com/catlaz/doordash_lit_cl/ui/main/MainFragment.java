@@ -1,12 +1,17 @@
 package com.catlaz.doordash_lit_cl.ui.main;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.VideoView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -73,6 +78,7 @@ public class MainFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(this.getResources().getString(TAB_TITLES[position]))).attach();
+
 
     }
 

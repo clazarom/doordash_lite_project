@@ -60,6 +60,16 @@ public class RestaurantListAdapter extends BaseAdapter {
      */
     public List<Restaurant> getRestaurantsList(){return restaurantsList;}
 
+    /**
+     * Reset the contents of the list adapter
+     */
+    public void clearRestaurantList(){
+        restaurantsList.clear();
+        restaurantImagesMap.clear();
+        notifyDataSetChanged(); //update change
+
+    }
+
     @Override
     public int getCount() {
         Log.d(_TAG, "Get count: "+restaurantsList.size());
@@ -100,7 +110,6 @@ public class RestaurantListAdapter extends BaseAdapter {
         //Add description of the restaurant
         TextView restauranDescription =  convertView.findViewById(R.id.restaurant_description);
         restauranDescription.setText(restaurant.getDescription());
-
 
 
         return convertView;

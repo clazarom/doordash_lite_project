@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
@@ -22,6 +25,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -37,7 +41,9 @@ public class RestaurantsFragment extends Fragment {
 
     //Restaurants list adapter
     private RestaurantListAdapter rListAdapter;
-
+    private ListView restaurantsListView;
+    private ConstraintLayout loadingView;
+    private ImageView loadingImageGif;
 
     //Connect to DoorDash server
     private RestClient restClient;
@@ -66,7 +72,7 @@ public class RestaurantsFragment extends Fragment {
 
         //Set up the restaurants list
         rListAdapter = new RestaurantListAdapter(getActivity());
-        ListView restaurantsListView = view.findViewById(R.id.list_restaurants);
+        restaurantsListView = view.findViewById(R.id.list_restaurants);
         restaurantsListView.setAdapter(rListAdapter);
         restaurantsListView.setOnItemClickListener(listOnItemClickListener);
         restaurantsListView.setOnTouchListener(rListOnTouchListener);
@@ -76,18 +82,26 @@ public class RestaurantsFragment extends Fragment {
         Button refreshButton = view.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(buttonOnClickListener);
 
+        //Loading video
+        loadingView = view.findViewById(R.id.loading_image_layout);
+        loadingImageGif = view.findViewById(R.id.spin_video);
+        startLoadingImage(loadingImageGif);
+
         //RestClient
         restClient= new RestClient(getContext());
         receiver = new UpdatesBroadcastReceiver(new Handler(), rListAdapter); // Create the receiver
+        receiver.setListLoad(restaurantsListView, loadingView);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+
 
         //Update contents of listview automatically
         List<Restaurant> restaurantList = UpdatedValues.Instance().getRestaurantList();
-        if (restaurantList.size()>0)
+        if (restaurantList.size()>0) {
             //If there is already data available...  update it!
             rListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList(),
                     UpdatedValues.Instance().getRestaurantImageMap());
-        else
+            showRestaurantsList(true);
+        }else
             //If not, request from server
             restClient.getRestaurantsListByDoorDashHQ();
 
@@ -105,6 +119,35 @@ public class RestaurantsFragment extends Fragment {
         //Unregister Receiver
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
     }
+
+    /**
+     * Initialize the GIF image LOADING
+     * @param gifImageView rootView
+     *
+     */
+    private void startLoadingImage(ImageView gifImageView){
+        //Load gif into ImageView using DrawableImageVieTarget
+        gifImageView.setVisibility(View.VISIBLE);
+        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(gifImageView);
+        Glide.with(getActivity())
+                .load(R.raw.dyn_spin)
+                .placeholder(R.raw.dyn_spin)
+                .centerCrop()
+                .crossFade()
+                .into(imageViewTarget);
+    }
+
+    private void showRestaurantsList(boolean show){
+        if (show) {
+            restaurantsListView.setVisibility(View.VISIBLE);
+            loadingView.setVisibility(View.GONE);
+        }else{
+            restaurantsListView.setVisibility(View.GONE);
+            loadingView.setVisibility(View.VISIBLE);
+            startLoadingImage(loadingImageGif); //... gif does not restart <TODO>
+        }
+    }
+
 
     /* ************************************************
        LISTENERS
@@ -129,11 +172,38 @@ public class RestaurantsFragment extends Fragment {
 
     };
 
-    //Refresh button on click listener: refresh list
-    View.OnClickListener buttonOnClickListener = view -> {
+    /**
+     * Click refresh button: clear current list and get a new one
+     */
+    private void onClickRefresh(){
         //Get restaurants from Doordash server: async call
         restClient.getRestaurantsListByDoorDashHQ();
-        
+        //Clear the listview
+        rListAdapter.clearRestaurantList();
+        showRestaurantsList(true);
+    }
+
+    /**
+     * Click load more button: get new stores and add them at the end of the list
+     */
+    private void onClickMore(){
+        //Get restaurants from Doordash server: async call
+        restClient.getRestaurantsListByDoorDashHQ(); // NEW METHOD TO DEVELOP
+
+    }
+
+    //Refresh button on click listener: refresh list
+    @SuppressLint("NonConstantResourceId")
+    View.OnClickListener buttonOnClickListener = view -> {
+        switch (view.getId()) {
+            case R.id.refresh_button:
+                onClickRefresh();
+            case R.id.more_button:
+                onClickMore();
+            default:
+                //Do nothing
+                Log.d(_TAG, "onClick nothing");
+        }
     };
 
     //Touch listener, to allow scrolling on the list

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.catlaz.doordash_lit_cl.data.Restaurant;
@@ -15,6 +17,8 @@ import com.catlaz.doordash_lit_cl.remote.RestClient;
 import org.w3c.dom.Text;
 
 import java.util.List;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Broadcast Receiver to Update downloaded values
@@ -29,9 +33,15 @@ public class UpdatesBroadcastReceiver extends BroadcastReceiver {
 
     //UI elements
     private final RestaurantListAdapter restaurantListAdapter; //listview to update
+    //quick fix... should be improved (and broadcast redone)
+    private ListView listView;
+    private ConstraintLayout loadingView;
+
     private TextView telephone;
     private TextView address;
     private int id;
+
+
 
     /**
      * Constructor default
@@ -68,6 +78,13 @@ public class UpdatesBroadcastReceiver extends BroadcastReceiver {
         this.id = id;
     }
 
+    //quick fix... should be improved (and broadcast redone)
+    public void setListLoad(ListView listView, ConstraintLayout loadingView){
+        this.listView = listView;
+        this.loadingView = loadingView;
+    }
+
+
     /**
      * Callback when an intent is received
      *
@@ -87,6 +104,9 @@ public class UpdatesBroadcastReceiver extends BroadcastReceiver {
                         UpdatedValues.Instance().getRestaurantImageMap());
                 //Consume updated values
                 UpdatedValues.Instance().cleanRestaurants();
+                //Visibles
+                listView.setVisibility(View.VISIBLE);
+                loadingView.setVisibility(View.GONE);
             });
 
         //Update Details

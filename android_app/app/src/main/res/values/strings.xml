@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">doordash_lit_cl</string>
+    <string name="app_name">DD Lit</string>
+    <string name="main_title">DD Lit Restaurants</string>
 
     <!-- SPLASH ACTIVITY -->
     <string name="splash_text">DoorDash LIT(e)</string>
@@ -8,12 +9,14 @@
     <string name="app_my_info">Thank you for reviewing DoorDahs Lit(e) - built by Caterina Lazaro</string>
 
     <!-- TABS AND PAGES STRINGS -->
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">List</string>
+    <string name="tab_text_2">Map</string>
     <string name="page_text">Welcome to the page </string>
 
     <!-- RESTAURANT LIST FRAGMENT STRINGS-->
     <string name="refresh_text">Refresh</string>
+    <string name="more_text">More</string>
+
     <string name="restaurant_i_string"> Image Thumbnail</string>
 
     <!-- RESTAURANT DETAIL FRAGMENT STRINGS-->

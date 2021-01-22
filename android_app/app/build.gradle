@@ -69,6 +69,9 @@ dependencies {
     //Broadcast receivers
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
 
+    //Add animated gifs
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
     //Testing
     testImplementation 'junit:junit:4.12'
     //noinspection GradleDependency

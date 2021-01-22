@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-
+    <color name="colorPrimary">#C4281D</color>
+    <color name="colorPrimaryDark">#E53024</color>
+    <color name="colorAccent">#A8AAAC</color>
+    <color name="colorBackgroundDarkButton">#000000</color>
     <!-- Standard colors -->
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Theme colors -->
+    <color name="darkRed">#C4281D</color>
+    <color name="lightRed">#E53024</color>
+    <color name="gray">#A8AAAC</color>
+    <color name="yellow">#FFFD03</color>
+
 </resources>
