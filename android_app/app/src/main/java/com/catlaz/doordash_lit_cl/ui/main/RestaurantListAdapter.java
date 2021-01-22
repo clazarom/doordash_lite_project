@@ -50,6 +50,11 @@ public class RestaurantListAdapter extends BaseAdapter {
 
     }
 
+    /**
+     * Getter for restaurant list
+     * @return restaurant list
+     */
+    public List<Restaurant> getRestaurantsList(){return restaurantsList;}
 
     @Override
     public int getCount() {

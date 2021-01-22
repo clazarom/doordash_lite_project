@@ -15,7 +15,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 
     // Configure only for each module that uses Java 8
     // language features (either in its source code or
@@ -65,8 +71,27 @@ dependencies {
 
     //Testing
     testImplementation 'junit:junit:4.12'
+    //noinspection GradleDependency
+    androidTestImplementation("androidx.test:runner:1.2.0") // if updated to latest version, test crashes ?
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //Espresso
+    //noinspection GradleDependency
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0' //if updated to latest version, instrumented test crashes ?
+    //noinspection GradleDependency
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0' //mock intents
+    //noinspection GradleDependency
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    //noinspection GradleDependency
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.7.22'
+
+
+
+    //Fragments
+    def fragment_version = "1.2.5"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
 
 
 }

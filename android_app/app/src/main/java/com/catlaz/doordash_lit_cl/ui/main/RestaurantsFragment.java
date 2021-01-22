@@ -15,14 +15,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import com.catlaz.doordash_lit_cl.BuildConfig;
+
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +42,12 @@ public class RestaurantsFragment extends Fragment {
     //Connect to DoorDash server
     private RestClient restClient;
     private UpdatesReceiver receiver;
+
+    /**
+     * Getter for the list adapter
+     * @return restaurant list adapter
+     */
+    public RestaurantListAdapter getrListAdapter(){return rListAdapter;}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -113,19 +116,9 @@ public class RestaurantsFragment extends Fragment {
 
     //Refresh button on click listener: refresh list
     View.OnClickListener buttonOnClickListener = view -> {
-        //1. Update with MOCK Restaurants list
-        if (BuildConfig.DEBUG_MODE) {
-            List<Restaurant> restaurantList = new ArrayList<>();
-            restaurantList.add(new Restaurant(1, "katsu burguer", "burguers, korean", "url"));
-            restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
-            restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
-            //Update list
-            rListAdapter.updateRestaurantList(restaurantList, null);
-        }
-        //2. Get restaurants from Doordash server: async call
+        //Get restaurants from Doordash server: async call
         restClient.getRestaurantsListByDoorDashHQ();
-
-
+        
     };
 
     //Touch listener, to allow scrolling on the list
@@ -153,7 +146,7 @@ public class RestaurantsFragment extends Fragment {
         BROADCAST RECEIVER: Update UI
      */
     public static class UpdatesReceiver extends BroadcastReceiver {
-        private static String _TAG = "UPDATES_BROADCAST_RECEIVER";
+        private static final String _TAG = "UPDATES_BROADCAST_RECEIVER";
         //Handler
         private final Handler handler; // to execute code on the UI thread
         private final RestaurantListAdapter restaurantListAdapter; //listview to update
@@ -187,15 +180,12 @@ public class RestaurantsFragment extends Fragment {
             boolean updated = intent.getBooleanExtra("updated", false);
 
             if (updated && restaurantListAdapter!=null)
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    //Update UI
-                    restaurantListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList(),
-                            UpdatedValues.Instance().getRestaurantImageMap() );
-                    //Consume updated values
-                    UpdatedValues.Instance().cleanRestaurants();
-                }
+            handler.post(() -> {
+                //Update UI
+                restaurantListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList(),
+                        UpdatedValues.Instance().getRestaurantImageMap() );
+                //Consume updated values
+                UpdatedValues.Instance().cleanRestaurants();
             });
         }
     }

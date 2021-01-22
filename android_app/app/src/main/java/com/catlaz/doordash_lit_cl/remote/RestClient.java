@@ -183,15 +183,14 @@ public class RestClient {
      * @param offset offset [int]
      * @param limit limit of results [int]
      */
-    public void getRestaurantsLis(String home, double lat, double lng, int offset, int limit) {
+    public void getRestaurantsList(String home, double lat, double lng, int offset, int limit) {
         Log.d(_TAG, "Call request stores by "+home+": { lat: "+lat+", lng: "+lng+", offset: "+offset+
                 ", limit"+limit+"}");
 
-        //Send request
+        //Call server API asynchronous
         //Example: "https://api.doordash.com/v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=50";
         Call<APIRestaurantsResponseMessage> apiResponse = restAPI.getRestaurants(lat, lng, offset, limit);
-        //Call server API - synchronous
-        // try{ apiResponse.call(this); }catch(IOException ioe){ Log.e(_TAG, "Test error: "+e);}
+
 
         //Call server API - asynchronous
         //{body, errorBody, rawResponse, shadow$_klass, shadow$_monitor}
@@ -215,12 +214,55 @@ public class RestClient {
     }
 
     /**
+     * To test "GET restaurants", call synchronous
+     * API request to obtain a list of restaurants around a location
+     *
+     * @param home home name [String]
+     * @param lat latitude [double]
+     * @param lng longitude [double]
+     * @param offset offset [int]
+     * @param limit limit of results [int]
+     * @return list of restaurants
+     */
+    public List<Restaurant> testRestaurantsList(String home, double lat, double lng, int offset, int limit) {
+        Log.d(_TAG, "Call request stores by "+home+": { lat: "+lat+", lng: "+lng+", offset: "+offset+
+                ", limit"+limit+"}");
+        List<Restaurant> rList = null;
+        //Send request
+        //Example: "https://api.doordash.com/v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=50";
+        Call<APIRestaurantsResponseMessage> apiResponse = restAPI.getRestaurants(lat, lng, offset, limit);
+        //Call server API - synchronous
+        try{
+            Response<APIRestaurantsResponseMessage> response=apiResponse.execute();
+            Log.d(_TAG, "Successful response from server: "+response.code());
+            //Process the response
+            rList = successfulResponse(response);
+
+        }catch(IOException ioe){ Log.e(_TAG, "Test error: "+ioe);}
+
+        return rList;
+
+    }
+
+    /**
      * "GET restaurants by DoorDash"
      * API request to obtain a list of restaurants around DoorDash HG
      */
     public void getRestaurantsListByDoorDashHQ() {
         Log.d(_TAG, "Call DoorDash request stores");
-        getRestaurantsLis("DoorDash", 37.422740, -122.139956, 0, 50);
+        getRestaurantsList("DoorDash", 37.422740, -122.139956, 0, 50);
+
+    }
+
+    /**
+     * To test "GET restaurants by DoorDash", call synchronous
+     * API request to obtain a list of restaurants around DoorDash HG
+     *
+     * @return list of restaurants
+     */
+    public List<Restaurant> testRestaurantsListByDoorDashHQ() {
+        Log.d(_TAG, "Call DoorDash request stores");
+        return testRestaurantsList("DoorDash", 37.422740, -122.139956, 0, 50);
 
     }
 

@@ -35,6 +35,14 @@ public class MainFragment extends Fragment {
     FragmentPagesCollectionAdapter fragmentPagesCollectionAdapter;
     ViewPager2 viewPager;
 
+    /**
+     * Get the fragment currently being displayed
+     * @return current fragment
+     */
+    public Fragment getCurrentPage(){
+        return fragmentPages.get(viewPager.getCurrentItem());
+    }
+
 
     @Nullable
     @Override

@@ -2,15 +2,14 @@ package com.catlaz.doordash_lit_cl;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 
-import com.catlaz.doordash_lit_cl.ui.main.DetailFragment;
 import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -28,10 +27,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Keep screen on for debug mode
+        if(BuildConfig.DEBUG){
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
 
         //Fragment holder initialize
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragemt_placeholder, new MainFragment(), "Restaurants"); // Replace the contents of the container with the new fragment
+        ft.replace(R.id.fragemt_placeholder, new MainFragment(), "main_restaurants_fragment"); // Replace the contents of the container with the new fragment
         ft.addToBackStack(null);
         ft.commit();
 
