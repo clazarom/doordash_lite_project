@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.catlaz.doordash_lit_cl.BuildConfig;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
+import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,7 +36,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class RestClient {
     private static final String _TAG = "REST_CLIENT";
+
+    //Broadcast messages
     public static final String _BROADCAST_API_UPDATE = "API_UPDATE";
+    public static final String _UPDATE_LIST_KEY = "update_list";
+    public static final String _UPDATE_DETAIL_KEY = "update_detail";
 
     //Doordash URL constants
     public static final String SERVER_HOST_NAME = "api.doordash.com";
@@ -86,11 +91,12 @@ public class RestClient {
 
     /**
      * Broadcast updated status messages
+     * @param key message key
      */
-    private void broadcastUpdateUI() {
+    private void broadcastUpdateUI(String key) {
         Log.i(_TAG,"Sending a Message to UI");
         Intent intent = new Intent(_BROADCAST_API_UPDATE);
-        intent.putExtra("updated",true);
+        intent.putExtra(key,true);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
@@ -119,7 +125,7 @@ public class RestClient {
      * @param response received response [APIRestaurantsResponseMessage]
      * @return list of restaurants
      */
-    private List<Restaurant> successfulResponse(Response<APIRestaurantsResponseMessage> response){
+    private List<Restaurant> successfulListResponse(Response<APIRestaurantsResponseMessage> response){
         Log.d(_TAG, "Process GET restaurant response");
 
         List<Restaurant> rList = new ArrayList<>();
@@ -142,7 +148,38 @@ public class RestClient {
             }
         }
         return rList;
+    }
 
+    /**
+     * Extract the Restaurant Detail for a GET stores request
+     * Validate the HTTP code too
+     *
+     * @param response received response [RestaurantDetail]
+     * @return list of restaurants
+     */
+    private RestaurantDetail successfulDetailResponse(Response<RestaurantDetail> response){
+        Log.d(_TAG, "Process GET restaurant response");
+
+        RestaurantDetail rDetail = new RestaurantDetail();
+        if (response.body() != null) {
+            //Log body DEBUG
+            if (BuildConfig.DEBUG_MODE)
+                logBody(response.body().toString());
+            //Process body's response
+            switch (response.code()) {
+                case _OK:
+                    Log.i(_TAG, "OK ("+_OK+") response from DoorDash server: stores");
+                    Log.d(_TAG, "Print stores numbers: "+response.body().getId());
+                    rDetail = response.body();
+                    break;
+                case _CONFLICT:
+                    Log.i(_TAG, "CONFLICT ("+_CONFLICT+") response from DoorDash server: stores");
+                    break;
+                default:
+                    Log.i(_TAG, "OTHER ("+response.code()+") response from DoorDash server: stores");
+            }
+        }
+        return rDetail;
     }
 
     /**
@@ -152,7 +189,7 @@ public class RestClient {
      *
      * @param rList restaurants_list
      */
-    private void updateValuesToUI(List<Restaurant> rList){
+    private void updateRestaurantsListToUI(List<Restaurant> rList){
         Log.d(_TAG, "Updating values for the UI to update");
         //1. Process received images - to BitMap
         //Compute Image - NOTE !!! Network Operation cannot be in Main/ UI Thread
@@ -168,8 +205,8 @@ public class RestClient {
             //2. Update Data Interface
             UpdatedValues.Instance().updateRestaurants(rList, rImagesMap);
             //3. Notify UI of changes
-            broadcastUpdateUI();
-            });
+            broadcastUpdateUI(_UPDATE_LIST_KEY);
+        });
     }
 
 
@@ -193,23 +230,20 @@ public class RestClient {
 
 
         //Call server API - asynchronous
-        //{body, errorBody, rawResponse, shadow$_klass, shadow$_monitor}
-            apiResponse.enqueue(new Callback<APIRestaurantsResponseMessage>() {
-                @Override
-                public void onResponse(@NotNull Call<APIRestaurantsResponseMessage> call, @NotNull Response<APIRestaurantsResponseMessage> response) {
-                    Log.d(_TAG, "Successful response from server: "+response.code());
-                    //Process the response
-                    List<Restaurant> rList = successfulResponse(response);
-                    //Update UI
-                    updateValuesToUI( rList);
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<APIRestaurantsResponseMessage> call, @NotNull Throwable t) {
-                    Log.d(_TAG, "Failed response from server: "+t.toString());
-                }
-            });
+        apiResponse.enqueue(new Callback<APIRestaurantsResponseMessage>() {
+            @Override
+            public void onResponse(@NotNull Call<APIRestaurantsResponseMessage> call, @NotNull Response<APIRestaurantsResponseMessage> response) {
+                Log.d(_TAG, "Successful response from server: "+response.code());
+                //Process the response
+                List<Restaurant> rList = successfulListResponse(response);
+                //Update UI
+                updateRestaurantsListToUI( rList);
+            }
+            @Override
+            public void onFailure(@NotNull Call<APIRestaurantsResponseMessage> call, @NotNull Throwable t) {
+                Log.d(_TAG, "Failed response from server: "+t.toString());
+            }
+        });
 
     }
 
@@ -224,8 +258,8 @@ public class RestClient {
      * @param limit limit of results [int]
      * @return list of restaurants
      */
-    public List<Restaurant> testRestaurantsList(String home, double lat, double lng, int offset, int limit) {
-        Log.d(_TAG, "Call request stores by "+home+": { lat: "+lat+", lng: "+lng+", offset: "+offset+
+    public List<Restaurant> getRestaurantsListSync(String home, double lat, double lng, int offset, int limit) {
+        Log.d(_TAG, "Call test request stores by "+home+": { lat: "+lat+", lng: "+lng+", offset: "+offset+
                 ", limit"+limit+"}");
         List<Restaurant> rList = null;
         //Send request
@@ -236,7 +270,7 @@ public class RestClient {
             Response<APIRestaurantsResponseMessage> response=apiResponse.execute();
             Log.d(_TAG, "Successful response from server: "+response.code());
             //Process the response
-            rList = successfulResponse(response);
+            rList = successfulListResponse(response);
 
         }catch(IOException ioe){ Log.e(_TAG, "Test error: "+ioe);}
 
@@ -251,7 +285,6 @@ public class RestClient {
     public void getRestaurantsListByDoorDashHQ() {
         Log.d(_TAG, "Call DoorDash request stores");
         getRestaurantsList("DoorDash", 37.422740, -122.139956, 0, 50);
-
     }
 
     /**
@@ -261,9 +294,62 @@ public class RestClient {
      * @return list of restaurants
      */
     public List<Restaurant> testRestaurantsListByDoorDashHQ() {
-        Log.d(_TAG, "Call DoorDash request stores");
-        return testRestaurantsList("DoorDash", 37.422740, -122.139956, 0, 50);
+        Log.d(_TAG, "Call test DoorDash request stores");
+        return getRestaurantsListSync("DoorDash", 37.422740, -122.139956, 0, 50);
 
+    }
+
+    /**
+     * GET restaurant detail, making a sync call
+     * @param id restaurant id
+     * @return RestaurantDetail
+     */
+    public void getRestaurantDetail(int id) {
+        Log.d(_TAG, "Call test request restaurant: " + id);
+        if (UpdatedValues.Instance().getRestaurantDetailMap().get(id) == null) {
+            // Only if the details were not previously requested
+            Call<RestaurantDetail> apiResponse = restAPI.getRestaurantDetail(id);
+            //Call server API - asynchronous
+            apiResponse.enqueue(new Callback<RestaurantDetail>() {
+                @Override
+                public void onResponse(@NotNull Call<RestaurantDetail> call, @NotNull Response<RestaurantDetail> response) {
+                    Log.d(_TAG, "Successful response from server: " + response.code());
+                    //1. Process the response
+                    RestaurantDetail rDetail = successfulDetailResponse(response);
+                    //Update UI
+                    //2. Update Data Interface
+                    UpdatedValues.Instance().addRestaurantDetail(rDetail);
+                    //3. Notify UI of changes
+                    broadcastUpdateUI(_UPDATE_DETAIL_KEY);
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<RestaurantDetail> call, @NotNull Throwable t) {
+                    Log.d(_TAG, "Failed response from server: " + t.toString());
+                }
+            });
+        }
+    }
+
+    /**
+     * Test function GET restaurant detail, making a sync call
+     * @param id id
+     * @return RestaurantDetail
+     */
+    public RestaurantDetail getRestaurantDetailSync(int id){
+        Log.d(_TAG, "Call test request restaurant: "+id);
+        Call<RestaurantDetail> apiResponse = restAPI.getRestaurantDetail(id);
+        //Call server API - synchronous
+        try{
+            Response<RestaurantDetail> response=apiResponse.execute();
+            Log.d(_TAG, "Successful response from server: "+response.code());
+            //Process the response
+            return response.body();
+
+        }catch(IOException ioe){ Log.e(_TAG, "Test error: "+ioe);}
+
+        //Nothing was received
+        return null;
     }
 
 

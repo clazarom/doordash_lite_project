@@ -1,27 +1,20 @@
 package com.catlaz.doordash_lit_cl;
 
 import android.content.Context;
-import android.content.IntentFilter;
 
 import com.catlaz.doordash_lit_cl.data.Restaurant;
-import com.catlaz.doordash_lit_cl.data.UpdatedValues;
+import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
-import com.catlaz.doordash_lit_cl.ui.main.RestaurantListAdapter;
-import com.catlaz.doordash_lit_cl.ui.main.RestaurantsFragment;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * local unit tests for the app functionality.
@@ -50,6 +43,12 @@ public class RestClientTest {
     public void requestDoorDashRestaurants(){
         List<Restaurant> rList = restClient.testRestaurantsListByDoorDashHQ();
         assertEquals(50, rList.size());
+    }
+
+    @Test
+    public void requestRestaurantDetail(){
+        RestaurantDetail rDetail = restClient.getRestaurantDetailSync(30);
+        assertNotNull(rDetail);
     }
 
 

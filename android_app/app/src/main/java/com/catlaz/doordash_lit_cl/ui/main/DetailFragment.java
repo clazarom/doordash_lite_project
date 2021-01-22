@@ -1,18 +1,20 @@
 package com.catlaz.doordash_lit_cl.ui.main;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.catlaz.doordash_lit_cl.R;
-
-import org.w3c.dom.Text;
+import com.catlaz.doordash_lit_cl.remote.RestClient;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * A fragment containing a list of restaurants close to DoorDash HQ (37.422740, -122.139956)
@@ -52,7 +54,10 @@ public class DetailFragment extends Fragment {
         tv.setText(description);
 
         //Use the Restaurant's id to retrieve more data
-
+        RestClient rClient = new RestClient(getContext());
+        rClient.getRestaurantDetail(id);
+        UpdatesBroadcastReceiver receiver = new UpdatesBroadcastReceiver(new Handler()); // Create the receiver
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
     }
 
-    }
+}

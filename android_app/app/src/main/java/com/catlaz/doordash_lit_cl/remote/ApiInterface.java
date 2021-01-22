@@ -1,5 +1,7 @@
 package com.catlaz.doordash_lit_cl.remote;
 
+import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -25,5 +27,13 @@ public interface ApiInterface {
             @Query("lat") double lat,
             @Query("lng") double lng,
             @Query("offset") int offset,
-            @Query("limit") int limit   );
+            @Query("limit") int limit);
+
+    //Get detail info of a restaurant
+    //Ex: "https://api.doordash.com/v2/restaurant/30/"
+    //@Headers(RestClient.TOKEN_HEADER+": {token}")
+    @GET("v2/restaurant/{id}/")
+    Call<RestaurantDetail> getRestaurantDetail(
+            @Path("id") int id);
+
 }

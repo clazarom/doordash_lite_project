@@ -9,8 +9,8 @@ public class Address {
     private String street;
     private String country;
     private String zip_code;
-    private int lat;
-    private int lng;
+    private double lat;
+    private double lng;
     private String shortname;
 
     @Override

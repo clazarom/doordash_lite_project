@@ -24,6 +24,13 @@ public class Restaurant {
     private int price_range;
 
 
+    /**
+     * Constructor
+     * @param id rest id
+     * @param name name
+     * @param description description
+     * @param cover_img_url image
+     */
     public Restaurant (int id, String name, String description, String cover_img_url){
         this.id = id;
         this.name = name;

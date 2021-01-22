@@ -27,6 +27,7 @@ public class UpdatedValues {
     //Last downloaded restaurant values
     private final List<Restaurant> restaurantList;
     private final Map<Integer, Bitmap> restaurantImagesMap;
+    private final Map<Integer, RestaurantDetail> restaurantDetailsMap;
 
 
     /**
@@ -36,6 +37,7 @@ public class UpdatedValues {
         //Init restaurant list
         restaurantList = new ArrayList<>();
         restaurantImagesMap = new HashMap<>();
+        restaurantDetailsMap = new HashMap<>();
     }
 
     /**
@@ -63,9 +65,18 @@ public class UpdatedValues {
         this.restaurantImagesMap.putAll(restaurantImagesMap);
     }
 
+    /**
+     * Update the map with restaurant's detail info
+     * @param restaurantDetail restaurant detail
+     */
+    public void addRestaurantDetail(RestaurantDetail restaurantDetail){
+        restaurantDetailsMap.put(restaurantDetail.getId(), restaurantDetail);
+    }
+
     //Getters
     public List<Restaurant> getRestaurantList(){ return restaurantList;}
     public Map<Integer,Bitmap> getRestaurantImageMap(){ return restaurantImagesMap;}
+    public Map<Integer,Bitmap> getRestaurantDetailMap(){ return restaurantImagesMap;}
 
 
     /**
