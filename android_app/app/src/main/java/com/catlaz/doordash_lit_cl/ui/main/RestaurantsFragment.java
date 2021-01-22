@@ -15,7 +15,10 @@ import android.widget.ListView;
 
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
+import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,19 +81,29 @@ public class RestaurantsFragment extends Fragment {
         receiver = new UpdatesBroadcastReceiver(new Handler(), rListAdapter); // Create the receiver
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
 
+        //Update contents of listview automatically
+        List<Restaurant> restaurantList = UpdatedValues.Instance().getRestaurantList();
+        if (restaurantList.size()>0)
+            //If there is already data available...  update it!
+            rListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList(),
+                    UpdatedValues.Instance().getRestaurantImageMap());
+        else
+            //If not, request from server
+            restClient.getRestaurantsListByDoorDashHQ();
+
     }
 
     @Override
-    public void onDestroy(){
-        Log.d(_TAG, "onDestroy");
+    public void onPause(){
+        super.onPause();
+
+        Log.d(_TAG, "onPause");
         //Clean remote disposables
         if (restClient != null)
             restClient.destroyDisposables();
 
         //Unregister Receiver
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
-
-        super.onDestroy();
     }
 
     /* ************************************************

@@ -27,11 +27,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Keep screen on for debug mode
+        //Keep screen ON for debug mode
         if(BuildConfig.DEBUG){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-
 
         //Fragment holder initialize
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, getResources().getString(R.string.app_my_info), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
+
     }
 
     // This callback will only be called when MyFragment is at least Started.

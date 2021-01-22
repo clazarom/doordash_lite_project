@@ -3,6 +3,7 @@ package com.catlaz.doordash_lit_cl.ui.main;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * @version 1.0 Jan 2021
  */
 public class DetailFragment extends Fragment {
+    private static final String _TAG= "DETAIL_FRAGMENT";
 
     private int id;
     private String name;
@@ -38,6 +40,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        Log.d(_TAG, "onCreateView");
 
         //Update the info we already have of the restaurant
         Bundle arguments = this.getArguments();
@@ -52,6 +55,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(_TAG, "onViewCreated");
 
         //Update UI with info we have received
         //name
@@ -77,7 +81,9 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy(){
+    public void onPause(){
+        super.onPause();
+        Log.d(_TAG, "onPause");
         //Clean remote disposables
         if (restClient != null)
             restClient.destroyDisposables();
@@ -85,7 +91,6 @@ public class DetailFragment extends Fragment {
         //Unregister Receiver
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
 
-        super.onDestroy();
     }
 
 }

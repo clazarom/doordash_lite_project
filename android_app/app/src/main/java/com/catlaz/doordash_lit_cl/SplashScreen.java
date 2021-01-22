@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.catlaz.doordash_lit_cl.remote.RestClient;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,6 +57,10 @@ public class SplashScreen extends AppCompatActivity {
                 // close this activity
                 this.finish();
             }, _SPLASH_DISPLAY_LENGTH);
+
+            //Internet Downloads in advance
+            new RestClient(this).getRestaurantsListByDoorDashHQ();
+
         } else {
             Toast.makeText(com.catlaz.doordash_lit_cl.SplashScreen.this, "No Network Service!,Restart the application by switching on the Network Service",
                     Toast.LENGTH_SHORT).show();
