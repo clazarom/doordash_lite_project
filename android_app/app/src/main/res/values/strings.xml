@@ -27,6 +27,7 @@
     <string name="map_image_text">No Maps</string>
     <string name="map_image_artist"> Photo by Andrew Neel from Pexels </string>
     <string name="map_image_link">https://www.pexels.com/photo/assorted-map-pieces-2859169/</string>
+    <string name="no_map_string">Sorry....\n No Maps Available Yet</string>
 
 
 </resources>
