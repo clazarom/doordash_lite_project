@@ -1,6 +1,62 @@
-doordash_lite_caterina
+# doordash_lite_caterina
+A simple version of the DoorDahs app.
 
-* Testings
+# Getting started
+
+This code has been developed in Windows, with Android Studio IDE. These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+## Technologies 
+
+### Developing Computer
+The specific versions of languages and tools used in these project are:
+
+    - OS: 
+    - Java JRE: 
+    - Android Studio: 
+    - Android Build Tools:
+    - Android Build Gradle:
+    - Compile SDK version: 
+    - Android SDK:
+    	- Target SDK:
+    	- Minimum SDK:
+
+
+## Download and import
+To setup the environment, close/download the GitHub repo. Then, on Android Studio, navigate to import the project:
+File > Open > (navigate to)../android_app
+
+*NOTE: Some locally built files may be modified and already marked by git as modified, since the .gitignore file is not finished
+
+## Run the app
+After the initial setup, the Android Studio should be ready to build and run - either on a virtual device or a physical android phone.
+
+For an Android phone, make sure the Developer Mode is umblock and USB Debug is allowed when plugin the USB. 
+
+# Functionality
+
+The app, 'DoorDash Lit(e)' uses DoorDahs public API's to request a list of nearby stores, and then display them on a ListView. To do so, there are two main methods implemented:
+- Refresh: cleans the previous data and request a new set
+- More: request new data and append it a the end of the previous list
+
+Additionally, the user can click on a restaurant/element to open a new screen with additional information.
+
+## Requirements
+
+- Internet: to retrieve the restaurants information, the phone needs a data connection. If not, the app will be stuck in the initial 'Splash' screen.
+
+## Future work
+
+An extra screen has been developed to show the stores in a map -- however, its functionality is still being built
+
+# Testing
+
+The testing units developed are designed to verify:
+- The restaurant listview: both generating mock local values and requesting real store data from the server
+- Some simple navigation functions, among the fragments
+- The REST API calls 
+
+
+##Troubleshooting Testing
 
 ** Possible causes for tests failing | Troubleshooting
 
