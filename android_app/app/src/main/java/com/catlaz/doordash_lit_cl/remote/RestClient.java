@@ -285,7 +285,7 @@ public class RestClient {
      * @param limit limit
      */
     public void getRestaurantsListByDoorDashHQ(int offset, int limit) {
-        Log.d(_TAG, "Call DoorDash request stores");
+        Log.d(_TAG, "Call DoorDash request stores: [offset: ,"+offset+", limit: "+limit+"]");
         getRestaurantsList("DoorDash", 37.422740, -122.139956, offset, limit);
     }
 

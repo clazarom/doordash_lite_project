@@ -24,7 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/info_corner_margin"
+        android:layout_marginEnd="@dimen/info_corner_margin"
         app:srcCompat="@android:drawable/ic_dialog_info"
         android:contentDescription="@string/floating_description" />
 

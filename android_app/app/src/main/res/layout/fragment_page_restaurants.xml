@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:nestedScrollingEnabled="true"
-        android:padding = "@dimen/appbar_padding"
+        android:paddingVertical= "@dimen/listview_vertical_padding"
+        android:paddingHorizontal= "@dimen/listview_horizontal_padding"
+        android:layout_marginBottom="@dimen/listview_temp_margin"
         android:visibility="gone"
         android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,8 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-             />
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Barrier
@@ -52,11 +53,10 @@
 
     <Button
         android:id="@+id/refresh_button"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/button_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/refresh_text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -65,11 +65,10 @@
 
     <Button
         android:id="@+id/more_button"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/button_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/more_text"
         android:visibility="visible"

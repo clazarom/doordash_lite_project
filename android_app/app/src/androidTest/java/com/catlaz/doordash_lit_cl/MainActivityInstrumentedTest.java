@@ -75,7 +75,7 @@ public class MainActivityInstrumentedTest {
         onView(withId(R.id.fragment_placeholder)).check(matches(isDisplayed()));
 
         //Check the views inside main_fragment
-        onView(withId(R.id.title)).check(matches(isDisplayed()));
+        onView(withId(R.id.logo_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tabs)).check(matches(isDisplayed()));
         onView(withId(R.id.view_pager)).check(matches(isDisplayed()));
 
