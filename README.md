@@ -10,15 +10,15 @@ This code has been developed in Windows, with Android Studio IDE. These instruct
 ### Developing Computer
 The specific versions of languages and tools used in these project are:
 
-    - OS: 
-    - Java JRE: 
-    - Android Studio: 
-    - Android Build Tools:
-    - Android Build Gradle:
-    - Compile SDK version: 
+    - OS: Microsoft Windows 10 HOme
+    - Java JRE: "1.8.0_242"
+    - Android Studio: 4.1.2
+    - Gradle version: 6.5
+    - Android Gradle Plugin: 4.1.2
+    - Compile SDK version: 29
     - Android SDK:
-    	- Target SDK:
-    	- Minimum SDK:
+    	- Target SDK: 29
+    	- Minimum SDK: 26
 
 
 ## Download and import
@@ -51,9 +51,9 @@ An extra screen has been developed to show the stores in a map -- however, its f
 # Testing
 
 The testing units developed are designed to verify:
-- The restaurant listview: both generating mock local values and requesting real store data from the server
-- Some simple navigation functions, among the fragments
-- The REST API calls 
+- The restaurant listview - both generating mock local values and requesting real store data from the server
+- MainActivity navigation - between the PagerViwer fragmetns as well as transitioning between the mainList and detailItem
+- REST API calls to the server {GET restaurant list , GET restaurant detail}
 
 
 ##Troubleshooting Testing
