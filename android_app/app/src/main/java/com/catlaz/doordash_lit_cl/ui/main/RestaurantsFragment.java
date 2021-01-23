@@ -60,9 +60,8 @@ public class RestaurantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(_TAG, "onCreate");
-
         super.onCreateView(inflater, container, savedInstanceState);
+        Log.d(_TAG, "onCreate");
         return inflater.inflate(R.layout.fragment_page_restaurants, container, false);
     }
 
@@ -109,6 +108,7 @@ public class RestaurantsFragment extends Fragment {
             restClient.getRestaurantsListByDoorDashHQ(0, _REQ_NUM);
 
     }
+
 
     @Override
     public void onPause(){

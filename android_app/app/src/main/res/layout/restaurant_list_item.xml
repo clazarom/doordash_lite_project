@@ -15,9 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/restaurant_name"
-        tools:layout_constraintLeft_creator="0"
-        tools:layout_constraintTop_creator="0" />
+        app:layout_constraintEnd_toStartOf="@+id/restaurant_name" />
 
     <TextView
         android:id="@+id/restaurant_name"
@@ -32,9 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/restaurant_description"
         app:layout_constraintStart_toEndOf="@+id/restaurant_image_thumb"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_constraintLeft_creator="0"
-        tools:layout_constraintTop_creator="0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/restaurant_description"
@@ -48,8 +44,6 @@
         app:layout_constraintTop_toBottomOf="@+id/restaurant_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/restaurant_image_thumb"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_constraintLeft_creator="0"
-        tools:layout_constraintTop_creator="0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

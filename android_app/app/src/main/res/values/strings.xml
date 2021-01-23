@@ -23,5 +23,10 @@
     <string name="telephone_label_text"> Call: </string>
     <string name="address_label_text"> Address: </string>
 
+    <!-- MAP NONEXISTENT ACTIVITY -->
+    <string name="map_image_text">No Maps</string>
+    <string name="map_image_artist"> Photo by Andrew Neel from Pexels </string>
+    <string name="map_image_link">https://www.pexels.com/photo/assorted-map-pieces-2859169/</string>
+
 
 </resources>
