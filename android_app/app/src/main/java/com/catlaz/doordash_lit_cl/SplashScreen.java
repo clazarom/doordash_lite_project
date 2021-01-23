@@ -20,7 +20,7 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
  * Splash screen to load before the application starts
  *
  * @author Caterina Lazaro
- * @version 1.0 Jan 2020
+ * @version 1.0 Jan 2021
  */
 
 public class SplashScreen extends AppCompatActivity {

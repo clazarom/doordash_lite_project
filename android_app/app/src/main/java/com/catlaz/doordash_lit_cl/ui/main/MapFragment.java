@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
  * A placeholder fragment containing a simple view.
  *
  * @author Caterina lazaro
- * @version 1.0 Jan 2020
+ * @version 1.0 Jan 2021
  */
 public class MapFragment extends Fragment {
     private static final String _TAG = "PH_COLLECTION_FRAGMENT";

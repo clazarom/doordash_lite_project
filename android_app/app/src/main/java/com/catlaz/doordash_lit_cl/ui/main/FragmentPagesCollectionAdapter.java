@@ -38,8 +38,6 @@ public class FragmentPagesCollectionAdapter extends FragmentStateAdapter {
         Bundle bundle= new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, position);
         fragment.setArguments(bundle);
-        //Add to te fragment stack?
-
 
         return fragment;
     }

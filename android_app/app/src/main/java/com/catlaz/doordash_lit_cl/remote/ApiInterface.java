@@ -14,7 +14,7 @@ import retrofit2.http.Query;
  *
  * API available url are served in https://host46.ph.iit.edu/api-docs/
  * @author Caterina Lazaro
- * @version 1.0 Jan 2020
+ * @version 1.0 Jan 2021
  */
 public interface ApiInterface {
 
