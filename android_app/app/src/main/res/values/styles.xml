@@ -1,11 +1,10 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Primary colors theme here. -->
         <item name="colorPrimary">@color/darkRed</item>
         <item name="colorPrimaryDark">@color/lightRed</item>
         <item name="colorAccent">@color/gray</item>
-        <item name="background">@color/white</item>
         <!-- TextView style -->
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
         <item name="android:textAppearance"> @style/AppTheme.TextAppearance</item>
@@ -45,6 +44,8 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+
+
     <!-- ViewPager Style -->
     <!-- Tabs -->
     <style name="AppTheme.TabLayout" parent="Widget.Design.TabLayout">
@@ -69,6 +70,15 @@
     <style name= "AppTheme.ListView" parent="android:Widget.Material.Light.ListView">
         <item name="android:background">@color/white</item>
 
+    </style>
+
+    <!-- Restaurant Detail style -->
+    <style name="DetailTheme" parent="Theme.AppCompat.Light">
+        <item name="background">@color/white</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
 
