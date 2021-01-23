@@ -221,8 +221,10 @@ public class RestaurantsFragment extends Fragment {
         switch (view.getId()) {
             case R.id.refresh_button:
                 onClickRefresh();
+                break;
             case R.id.more_button:
                 onClickMore();
+                break;
             default:
                 //Do nothing
                 Log.d(_TAG, "onClick nothing");
