@@ -109,11 +109,18 @@ public class RestaurantsFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(_TAG, "onResume");
+
+        //Register broadcast receiver
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+    }
 
     @Override
     public void onPause(){
         super.onPause();
-
         Log.d(_TAG, "onPause");
         //Clean remote disposables
         if (restClient != null)
@@ -129,6 +136,7 @@ public class RestaurantsFragment extends Fragment {
      *
      */
     private void startLoadingImage(ImageView gifImageView){
+        Log.d(_TAG, "start GIF image");
         //Load gif into ImageView using DrawableImageVieTarget
         gifImageView.setVisibility(View.VISIBLE);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(gifImageView);
@@ -140,6 +148,11 @@ public class RestaurantsFragment extends Fragment {
                 .into(imageViewTarget);
     }
 
+    /**
+     * Transition between loading screen and restaurants list screen
+     *
+     * @param show show_restaurant_list
+     */
     private void showRestaurantsList(boolean show){
         if (show) {
             restaurantsListView.setVisibility(View.VISIBLE);
@@ -179,9 +192,13 @@ public class RestaurantsFragment extends Fragment {
      * Click refresh button: clear current list and get a new one
      */
     private void onClickRefresh(){
+        Log.d(_TAG, "onClickRefresh");
         //Get restaurants from Doordash server: async call
         restClient.getRestaurantsListByDoorDashHQ(0,_REQ_NUM);
         //Clear the listview
+        if (rListAdapter==null){
+            //TODO
+        }
         rListAdapter.clearRestaurantList();
         showRestaurantsList(false);
     }
@@ -190,6 +207,7 @@ public class RestaurantsFragment extends Fragment {
      * Click load more button: get new stores and add them at the end of the list
      */
     private void onClickMore(){
+        Log.d(_TAG, "onClickLoadMore");
         int offset = rListAdapter.getRestaurantsList().size();
         //Get restaurants from DoorDash server: async call
         restClient.getRestaurantsListByDoorDashHQ(offset, _REQ_NUM); // NEW METHOD TO DEVELOP

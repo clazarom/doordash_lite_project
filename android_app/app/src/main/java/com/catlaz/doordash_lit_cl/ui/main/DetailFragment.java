@@ -93,4 +93,13 @@ public class DetailFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(_TAG, "onResume");
+
+        //Register broadcast receiver
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+    }
+
 }

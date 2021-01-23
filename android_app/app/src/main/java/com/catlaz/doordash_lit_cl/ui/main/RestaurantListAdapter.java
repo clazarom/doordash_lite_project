@@ -83,7 +83,7 @@ public class RestaurantListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        Log.d(_TAG, "Get item: "+restaurantsList.get(i).getId());
+//        Log.d(_TAG, "Get item: "+restaurantsList.get(i).getId());
 
         return restaurantsList.get(i);
     }
