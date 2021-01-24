@@ -1,6 +1,5 @@
 package com.catlaz.doordash_lit_cl.ui.main;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,10 +21,18 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+/**
+ * Main Fragment of the Main Activity, displaying a viewPager. Currently, we have two page fragments:
+ * - RestaurantsFragment: to display a list of restaurants
+ * - Map Fragment: to show a map with the location of those fragments <TODO> - not implemented yet
+ *
+ * @author Caterina Lazaro
+ * @version 1.0 Jan 2021
+ */
 public class MainFragment extends Fragment {
     private static final String _TAG = "MAIN_FRAGMENT";
 
-    //Fragments <TODO>
+    //Fragments
     //public static final int NUM_ITEMS = 2;
     private static final List<Fragment> fragmentPages = Collections.unmodifiableList(
             new ArrayList<Fragment>(){{add(new RestaurantsFragment()); add(new MapFragment()); }});
@@ -51,23 +58,21 @@ public class MainFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.d(_TAG, "View Created");
 
 
-        //Initialize ViewPager
-        //NOTE: Using ViewPager instead of ViewPager2 to be able to scroll listview inside viewpager
-        //More about the issue and workarounds
-        // -https://bladecoder.medium.com/fixing-recyclerview-nested-scrolling-in-opposite-direction-f587be5c1a04
-        // -https://gist.github.com/cbeyls/b75d730795a4b4c2fcdce554b0b0782a
+        //Initialize ViewPager2
         fragmentPagesCollectionAdapter = new FragmentPagesCollectionAdapter(this, fragmentPages);
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(fragmentPagesCollectionAdapter);
         viewPager.registerOnPageChangeCallback(onPageChangeCallback);
-        viewPager.setOnTouchListener(pagerOnTouchListener); //allow scrolling for the listview inside the viewpager
+        view.getParent().requestDisallowInterceptTouchEvent(false); //allow scrolling for the listview inside the viewpager
+        //More about the issue and workarounds
+        // -https://bladecoder.medium.com/fixing-recyclerview-nested-scrolling-in-opposite-direction-f587be5c1a04
+        // -https://gist.github.com/cbeyls/b75d730795a4b4c2fcdce554b0b0782a
 
         //Tabs
         TabLayout tabLayout = view.findViewById(R.id.tabs);
@@ -91,31 +96,10 @@ public class MainFragment extends Fragment {
         @Override
         public void onPageSelected (int position){
             //Adapt size to new child
-            fragmentPagesCollectionAdapter.notifyDataSetChanged();
-        }
-    };
+            //fragmentPagesCollectionAdapter.notifyDataSetChanged();
+            // nothing here for now...
 
-    //Touch listener, to allow scrolling on the child view (list)
-
-    @SuppressLint("ClickableViewAccessibility")
-    final
-    View.OnTouchListener pagerOnTouchListener = (view, motionEvent) -> {
-        Log.v(_TAG, "onItemTouch parent view");
-        // Disallow VERTICAL touch request for parent scroll, when child onTouch
-        switch (motionEvent.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.AXIS_VSCROLL:
-                // Disallow interception for PageViewer to intercept touch events VERTICALLY.
-                view.findViewById(R.id.list_restaurants).getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.AXIS_HSCROLL:
-                // Allow interception for PageViewer to intercept touch events VERTICALLY.
-                view.findViewById(R.id.list_restaurants).getParent()
-                        .requestDisallowInterceptTouchEvent(true);
-            break;
         }
-        return false;
     };
 
 }

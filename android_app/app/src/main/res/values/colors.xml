@@ -8,7 +8,8 @@
 
     <!-- Theme colors -->
     <color name="darkRed">#C4281D</color>
-    <color name="lightRed">#E53024</color>
+    <color name="lightRed">#ff3008</color>
+
     <color name="gray">#A8AAAC</color>
     <color name="darkGray">#484848</color>
 

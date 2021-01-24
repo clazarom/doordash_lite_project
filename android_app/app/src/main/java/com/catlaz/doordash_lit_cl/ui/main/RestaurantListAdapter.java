@@ -21,6 +21,10 @@ import java.util.Map;
 /**
  * ListView Adapter for the Restaurants List
  *
+ * Stores items in a restaurantList - List<Restaurant>, which can be updated, retrieved and clean
+ * It keeps the restaurants images (as bitmaps) in a separate Map, that can be access with the
+ * restaurant's id as key
+ *
  * @author Caterina Lazaro
  * @version 1.0 Jan 2021
  */
@@ -51,7 +55,7 @@ public class RestaurantListAdapter extends BaseAdapter {
      */
     public void updateRestaurantList (List<Restaurant> list, Map<Integer, Bitmap> map){
         Log.d(_TAG, "Update list: "+list.size());
-        if (list !=null && list.size() > 0)
+        if (list.size() > 0)
             restaurantsList.addAll(list);
         if(map!=null && map.size() > 0)
             restaurantImagesMap.putAll(map);
@@ -72,6 +76,24 @@ public class RestaurantListAdapter extends BaseAdapter {
         restaurantImagesMap.clear();
         notifyDataSetChanged(); //update change
 
+    }
+
+    /**
+     * Method to update a restaurant's item view with the right information
+     * @param itemView view
+     * @param i position
+     */
+    private void updateItemView(View itemView, int i){
+        Restaurant restaurant = restaurantsList.get(i);
+        //Add the thumbnail image -- user Bitmap
+        ImageView image = itemView.findViewById(R.id.restaurant_image_thumb);
+        image.setImageBitmap(restaurantImagesMap.get(restaurant.getId()));
+        //Add the name of the restaurant
+        TextView restaurantName =  itemView.findViewById(R.id.restaurant_name);
+        restaurantName.setText(restaurant.getName());
+        //Add description of the restaurant
+        TextView restaurantDescription =  itemView.findViewById(R.id.restaurant_description);
+        restaurantDescription.setText(restaurant.getDescription());
     }
 
     @Override
@@ -103,17 +125,8 @@ public class RestaurantListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.restaurant_list_item, container, false);
         }
 
-        //UPDATE DATA WITH RESTAURANT INFO
-        Restaurant restaurant = restaurantsList.get(position);
-        //Add the thumbnail image -- user Bitmap
-        ImageView image = convertView.findViewById(R.id.restaurant_image_thumb);
-        image.setImageBitmap(restaurantImagesMap.get(restaurant.getId()));
-        //Add the name of the restaurant
-        TextView restaurantName =  convertView.findViewById(R.id.restaurant_name);
-        restaurantName.setText(restaurant.getName());
-        //Add description of the restaurant
-        TextView restaurantDescription =  convertView.findViewById(R.id.restaurant_description);
-        restaurantDescription.setText(restaurant.getDescription());
+        //Update data with restaurant info
+        updateItemView(convertView, position);
 
 
         return convertView;

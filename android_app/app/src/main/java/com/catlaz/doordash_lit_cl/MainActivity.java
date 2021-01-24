@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
         //Back button navigation
-        getOnBackPressedDispatcher().addCallback(this, callback);
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         //Floating  action button <TODO>
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -48,8 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // This callback will only be called when MyFragment is at least Started.
-    final OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+    // Back navigation callback
+    final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true /* enabled by default */) {
+        /**
+         * Handle onBackPressed events:
+         * If there are fragments on the backStack, pop last up
+         * If not, exit the app
+         */
         @Override
         public void handleOnBackPressed() {
             Log.d(_TAG, "On back button pressed");
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             if (lastFragEntry > 0) {
                 fm.popBackStackImmediate(); // go to previous fragment
             }else {
-                //Exit app
+                //Exit app, change focus out
                 moveTaskToBack(true);
             }
         }

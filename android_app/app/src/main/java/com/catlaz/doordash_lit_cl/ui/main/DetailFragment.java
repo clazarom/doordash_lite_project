@@ -44,6 +44,7 @@ public class DetailFragment extends Fragment {
 
         //Update the info we already have of the restaurant
         Bundle arguments = this.getArguments();
+        assert arguments != null;
         id =  arguments.getInt("id", -1);
         name = arguments.getString("name", "restaurant");
         description = arguments.getString("description", "");
@@ -72,10 +73,10 @@ public class DetailFragment extends Fragment {
         restClient = new RestClient(getContext());
         restClient.getRestaurantDetail(id);
         receiver = new UpdatesBroadcastReceiver(new Handler(),
-                (TextView) view.findViewById(R.id.restaurant_telephone_number),
-                (TextView) view.findViewById(R.id.restaurant_address),
+                view.findViewById(R.id.restaurant_telephone_number),
+                view.findViewById(R.id.restaurant_address),
                 id); // Create the receiver
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
 
 
     }
@@ -89,7 +90,7 @@ public class DetailFragment extends Fragment {
             restClient.destroyDisposables();
 
         //Unregister Receiver
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver); // Unregister
 
     }
 
@@ -99,7 +100,7 @@ public class DetailFragment extends Fragment {
         Log.d(_TAG, "onResume");
 
         //Register broadcast receiver
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
     }
 
 }

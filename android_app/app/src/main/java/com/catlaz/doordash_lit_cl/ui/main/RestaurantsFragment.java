@@ -32,6 +32,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * A fragment containing a list of restaurants close to DoorDash HQ (37.422740, -122.139956)
+ * It request the data from DoorDash APIs and automatically update the contents of the list.
+ * Main UI functions:
+ *  REFRESH the list - load a new set of values
+ *  LOAD MORE - request and add new values at the end of the list
  *
  * @author Caterina lazaro
  * @version 1.0 Jan 2021
@@ -57,6 +61,13 @@ public class RestaurantsFragment extends Fragment {
      */
     public RestaurantListAdapter getRestaurantListAdapter(){return rListAdapter;}
 
+    /**
+     * On create view, return the new fragment
+     * @param inflater inflater
+     * @param container container[ViewGroup]
+     * @param savedInstanceState savedInstanceState[Bundle]
+     * @return fragment view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -65,21 +76,33 @@ public class RestaurantsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_page_restaurants, container, false);
     }
 
+    /**
+     * onViewCreated, initialize:
+     * - ViewList of restaurants, with its listAdapter
+     * - Buttons refresh and load more
+     * - RestClient, to send server requests
+     * - BroadcastReceiver, to receive notification of internet events
+     *
+     * @param view view
+     * @param savedInstanceState savedInstanceState[Bundle]
+     */
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(_TAG, "onViewCreated");
-
         //Set up the restaurants list
         rListAdapter = new RestaurantListAdapter(getActivity());
         restaurantsListView = view.findViewById(R.id.list_restaurants);
         restaurantsListView.setAdapter(rListAdapter);
         restaurantsListView.setOnItemClickListener(listOnItemClickListener);
-        restaurantsListView.setOnTouchListener(rListOnTouchListener);
+        restaurantsListView.setOnTouchListener(rListOnTouchListener); //allow scroll vertically
+        //More about the issue and workarounds with scrolling inside ViewPager2
+        // -https://bladecoder.medium.com/fixing-recyclerview-nested-scrolling-in-opposite-direction-f587be5c1a04
+        // -https://gist.github.com/cbeyls/b75d730795a4b4c2fcdce554b0b0782a
         rListAdapter.notifyDataSetChanged();
 
-        //Refresh and load more button
+        //REFRESH and load MORE button
         Button refreshButton = view.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(buttonOnClickListener);
         Button moreButton = view.findViewById(R.id.more_button);
@@ -93,7 +116,7 @@ public class RestaurantsFragment extends Fragment {
         restClient= new RestClient(getContext());
         receiver = new UpdatesBroadcastReceiver(new Handler(), rListAdapter); // Create the receiver
         receiver.setListLoad(restaurantsListView, loadingView);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
 
 
         //Update contents of listview automatically
@@ -109,15 +132,21 @@ public class RestaurantsFragment extends Fragment {
 
     }
 
+    /**
+     * onResume, register broadcastReceiver
+     */
     @Override
     public void onResume(){
         super.onResume();
         Log.d(_TAG, "onResume");
 
         //Register broadcast receiver
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
     }
 
+    /**
+     * onPause, unregister broadcastReceiver and clean restClient
+     */
     @Override
     public void onPause(){
         super.onPause();
@@ -127,7 +156,7 @@ public class RestaurantsFragment extends Fragment {
             restClient.destroyDisposables();
 
         //Unregister Receiver
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver); // Unregister
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver); // Unregister
     }
 
     /**
@@ -179,7 +208,7 @@ public class RestaurantsFragment extends Fragment {
 
 
         //Fragment holder initialize
-        final FragmentTransaction ft = getParentFragment().getParentFragmentManager().beginTransaction();
+        final FragmentTransaction ft = requireParentFragment().getParentFragmentManager().beginTransaction();
         DetailFragment mFragment = new DetailFragment();
         mFragment.setArguments(bundle);
         ft.replace(R.id.fragment_placeholder, mFragment, "Detail");
@@ -196,10 +225,11 @@ public class RestaurantsFragment extends Fragment {
         //Get restaurants from Doordash server: async call
         restClient.getRestaurantsListByDoorDashHQ(0,_REQ_NUM);
         //Clear the listview
-        if (rListAdapter==null){
-            //TODO
-        }
-        rListAdapter.clearRestaurantList();
+        if (rListAdapter != null)
+            rListAdapter.clearRestaurantList();
+        else
+            Log.e(_TAG,"restaurant list adapter is NULL!!!");
+
         showRestaurantsList(false);
     }
 
@@ -215,42 +245,38 @@ public class RestaurantsFragment extends Fragment {
     }
 
     //Refresh button on click listener: refresh list
-    @SuppressLint("NonConstantResourceId")
-    final
-    View.OnClickListener buttonOnClickListener = view -> {
-        switch (view.getId()) {
-            case R.id.refresh_button:
+    final View.OnClickListener buttonOnClickListener = view -> {
+        //Select the action to perform based on the button id
+        if (view.getId() == R.id.refresh_button)
                 onClickRefresh();
-                break;
-            case R.id.more_button:
+        else if (view.getId() == R.id.more_button)
                 onClickMore();
-                break;
-            default:
-                //Do nothing
-                Log.d(_TAG, "onClick nothing");
-        }
+
+        //Clicked on nothing
+        Log.d(_TAG, "onClick nothing");
     };
 
     //Touch listener, to allow scrolling on the list
-    @SuppressLint("ClickableViewAccessibility")
-    final
-    View.OnTouchListener rListOnTouchListener = (view, motionEvent) -> {
-        Log.v(_TAG, "onTouch child view restaurants_list");
+    final View.OnTouchListener rListOnTouchListener = (view, motionEvent) -> {
+        Log.v(_TAG, "onTouch child view restaurants_list: "+motionEvent.getAction());
         // Disallow horizontal touch request for parent scroll, when child onTouch
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.AXIS_VSCROLL:
+                Log.d(_TAG, "Disallow interception "+motionEvent.getAction());
                 // Disallow interception for ListView, to intercept touch events VERTICALLY.
                 view.getParent().requestDisallowInterceptTouchEvent(true);
-                break;
-            case MotionEvent.ACTION_UP:
+                view.performClick();
+                return true;
             case MotionEvent.AXIS_HSCROLL:
+                Log.d(_TAG, "Allow interception "+motionEvent.getAction());
                 // Allow interception for ListView, to intercept touch events VERTICALLY.
                 view.getParent().requestDisallowInterceptTouchEvent(false);
-                break;
+                return false;
         }
         return false;
     };
+
 
 
 }

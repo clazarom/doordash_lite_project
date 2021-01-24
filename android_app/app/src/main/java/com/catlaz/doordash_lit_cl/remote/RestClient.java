@@ -17,7 +17,6 @@ import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +79,7 @@ public class RestClient {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(_DD_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //receive Observable, Flowable, Single, Completable or Maybe <Call>
                 .client(httpClient.getOkHttpClient())
                 .build();
 
@@ -193,11 +192,11 @@ public class RestClient {
         Log.d(_TAG, "Updating values for the UI to update");
         //1. Process received images - to BitMap
         //Compute Image - NOTE !!! Network Operation cannot be in Main/ UI Thread
-        AsyncTask.execute ((Runnable) () -> {
+        AsyncTask.execute (() -> {
             Map<Integer, Bitmap> rImagesMap = new HashMap<>();
             for (Restaurant restaurant : rList)
                 try {
-                    Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(restaurant.getCover_img_url()).openConnection().getInputStream());
+                    Bitmap bitmap = BitmapFactory.decodeStream(new URL(restaurant.getCover_img_url()).openConnection().getInputStream());
                     rImagesMap.put(restaurant.getId(), bitmap);
                 } catch (IOException e) {
                     Log.e(_TAG, "Error processing restaurant image: " + e);
@@ -227,7 +226,6 @@ public class RestClient {
         //Call server API asynchronous
         //Example: "https://api.doordash.com/v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=50";
         Call<APIRestaurantsResponseMessage> apiResponse = restAPI.getRestaurants(lat, lng, offset, limit);
-
 
         //Call server API - asynchronous
         apiResponse.enqueue(new Callback<APIRestaurantsResponseMessage>() {

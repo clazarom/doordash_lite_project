@@ -157,6 +157,7 @@ public class MainActivityInstrumentedTest {
         FragmentManager fm = mMainActivity.getSupportFragmentManager();
         if (fm.getBackStackEntryCount()>0) {
             MainFragment mFragment = (MainFragment) fm.findFragmentByTag(_MAIN_FRAGMENT_TAG);
+            assert mFragment != null;
             RestaurantsFragment restaurantsFragment = (RestaurantsFragment) mFragment.getCurrentPage();
 
             //2. Click refresh button: download restaurants

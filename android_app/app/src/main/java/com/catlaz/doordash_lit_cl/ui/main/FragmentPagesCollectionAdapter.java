@@ -1,6 +1,5 @@
 package com.catlaz.doordash_lit_cl.ui.main;
 
-import android.os.Bundle;
 
 import java.util.List;
 
@@ -8,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import static com.catlaz.doordash_lit_cl.ui.main.MapFragment.ARG_SECTION_NUMBER;
 
 /**
  * Fragment state adapter to manage the fragment pages (on ViewPager2)
@@ -33,13 +31,12 @@ public class FragmentPagesCollectionAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = pagesList.get(position);
-        //Send some arguments for the fragment
-        Bundle bundle= new Bundle();
-        bundle.putInt(ARG_SECTION_NUMBER, position);
-        fragment.setArguments(bundle);
+        //OPTION: Send some arguments to the fragment
+//        Bundle bundle= new Bundle();
+//        bundle.putInt(ARG_SECTION_NUMBER, position);
+//        fragment.setArguments(bundle);
 
-        return fragment;
+        return pagesList.get(position);
     }
 
     @Override

@@ -24,7 +24,9 @@
 
     <!-- Restaurant's list -->
     <dimen  name="listview_vertical_padding">20sp</dimen>
-    <dimen  name="listview_horizontal_padding">30sp</dimen>
+    <dimen  name="listview_horizontal_padding">5sp</dimen>
+    <dimen  name="listview_horizontal_margin">25sp</dimen>
+
     <dimen  name="listview_temp_margin">60sp</dimen>
 
     <dimen name="rest_item_height">100dp</dimen>
@@ -33,7 +35,6 @@
     <dimen name="rest_item_title_text">20sp</dimen>
     <dimen name="rest_item_description_text">10sp</dimen>
 
-    <dimen name="rest_item_vertical_margin">6dp</dimen>
     <dimen name="rest_item_horizontal_margin">6dp</dimen>
 
     <dimen name="spin_image_size">50dp</dimen>

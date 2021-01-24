@@ -3,7 +3,8 @@
     android:id="@+id/fragment_page_restaurants"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
     <ListView
         android:id="@+id/list_restaurants"
@@ -12,6 +13,7 @@
         android:nestedScrollingEnabled="true"
         android:paddingVertical= "@dimen/listview_vertical_padding"
         android:paddingHorizontal= "@dimen/listview_horizontal_padding"
+        android:layout_marginHorizontal= "@dimen/listview_horizontal_margin"
         android:layout_marginBottom="@dimen/listview_temp_margin"
         android:visibility="gone"
         android:fillViewport="true"

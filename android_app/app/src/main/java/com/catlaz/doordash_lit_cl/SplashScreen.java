@@ -33,7 +33,7 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_screen);
+        setContentView(R.layout.activity_splash);
 
         mContext = this;
         View decorView = getWindow().getDecorView();
@@ -42,17 +42,15 @@ public class SplashScreen extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
+        //Check network availability
         if (isNetworkAvailable(mContext)) {
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
+            //Show SPLASH screen with a timer
             new Handler().postDelayed(() -> {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 Intent i = new Intent(getBaseContext(), MainActivity.class);
-                i.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // never navigate back here
                mContext.startActivity(i);
 
                 // close this activity
@@ -63,9 +61,11 @@ public class SplashScreen extends AppCompatActivity {
             new RestClient(this).getRestaurantsListByDoorDashHQ(0, _INIT_REQ_NUM);
 
         } else {
-            Toast.makeText(com.catlaz.doordash_lit_cl.SplashScreen.this, "No Network Service!,Restart the application by switching on the Network Service",
+            Toast.makeText(com.catlaz.doordash_lit_cl.SplashScreen.this,
+                    R.string.no_network_message_string,
                     Toast.LENGTH_SHORT).show();
-            showNotification("No Network Service!,Restart the application by switching on the Network Service");
+
+            showNotification(getString(R.string.no_network_message_string));
         }
     }
 
@@ -77,12 +77,15 @@ public class SplashScreen extends AppCompatActivity {
     public  static boolean isNetworkAvailable(Context ctx) {
         ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        //Check availability
         if (networkInfo != null && networkInfo.isConnected()) {
-            Log.e("Network Testing", "***Available***");
+            Log.i("Network Testing", "***Available***");
             return true;
+        }else {
+            Log.e("Network Testing", "***Not Available***");
+            return false;
         }
-        Log.e("Network Testing", "***Not Available***");
-        return false;
     }
 
     /**
