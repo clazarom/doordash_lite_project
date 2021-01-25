@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.catlaz.doordash_lit_cl.R;
+import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
 
@@ -25,16 +26,19 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * @author Caterina lazaro
  * @version 1.0 Jan 2021
  */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements APIBroadcastListener{
     private static final String _TAG= "DETAIL_FRAGMENT";
 
+    //Details on UI
     private int id;
     private String name;
     private String description;
+    private TextView telephoneView;
+    private TextView addressView;
 
     //Communicate with the server
     private RestClient restClient;
-    UpdatesBroadcastReceiver receiver;
+    APIUpdateBroadcastReceiver receiver;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -69,16 +73,15 @@ public class DetailFragment extends Fragment {
         ImageView image = view.findViewById(R.id.restaurant_image_detail);
         image.setImageBitmap(UpdatedValues.Instance().getRestaurantImageMap().get(id));
 
+        //telephone
+        telephoneView = view.findViewById(R.id.restaurant_telephone_number);
+        addressView = view.findViewById(R.id.restaurant_address);
+
         //Use the Restaurant's id to retrieve more data
         restClient = new RestClient(getContext());
         restClient.getRestaurantDetail(id);
-        receiver = new UpdatesBroadcastReceiver(new Handler(),
-                view.findViewById(R.id.restaurant_telephone_number),
-                view.findViewById(R.id.restaurant_address),
-                id); // Create the receiver
+        receiver = new APIUpdateBroadcastReceiver(this); // Create the receiver
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
-
-
     }
 
     @Override
@@ -101,6 +104,14 @@ public class DetailFragment extends Fragment {
 
         //Register broadcast receiver
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+    }
+
+    @Override
+    public void updateUI(){
+        //Update UI
+        RestaurantDetail rDetail = UpdatedValues.Instance().getRestaurantDetailMap().get(id);
+        telephoneView.setText(rDetail.getPhone_number());
+        addressView.setText(rDetail.getAddress().toString());
     }
 
 }

@@ -40,7 +40,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * @author Caterina lazaro
  * @version 1.0 Jan 2021
  */
-public class RestaurantsFragment extends Fragment {
+public class RestaurantsFragment extends Fragment  implements  APIBroadcastListener{
     private static final String _TAG = "RESTAURANTS_FRAGMENT";
 
     public static final int _REQ_NUM = 10;
@@ -53,7 +53,7 @@ public class RestaurantsFragment extends Fragment {
 
     //Connect to DoorDash server
     private RestClient restClient;
-    private UpdatesBroadcastReceiver receiver;
+    private APIUpdateBroadcastReceiver receiver;
 
     /**
      * Getter for the list adapter
@@ -114,8 +114,7 @@ public class RestaurantsFragment extends Fragment {
 
         //RestClient
         restClient= new RestClient(getContext());
-        receiver = new UpdatesBroadcastReceiver(new Handler(), rListAdapter); // Create the receiver
-        receiver.setListLoad(restaurantsListView, loadingView);
+        receiver = new APIUpdateBroadcastReceiver(this); // Create the receiver
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
 
 
@@ -157,6 +156,20 @@ public class RestaurantsFragment extends Fragment {
 
         //Unregister Receiver
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver); // Unregister
+    }
+
+    @Override
+    public void updateUI(){
+        List<Restaurant> restaurantsToUpdate = UpdatedValues.Instance().getRestaurantList();
+        if (restaurantsToUpdate.size()>0) {
+            //Update restaurant list
+            rListAdapter.updateRestaurantList(restaurantsToUpdate,
+                    UpdatedValues.Instance().getRestaurantImageMap());
+            //Consume updated values
+            UpdatedValues.Instance().cleanRestaurants();
+            //Visible
+            showRestaurantsList(true);
+        }
     }
 
     /**
