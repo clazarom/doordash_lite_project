@@ -3,20 +3,9 @@ package com.catlaz.doordash_lit_cl.ui.main;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.catlaz.doordash_lit_cl.data.Restaurant;
-import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
-import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
-
-import java.util.List;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Broadcast Receiver to Update downloaded values

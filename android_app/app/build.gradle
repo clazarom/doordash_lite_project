@@ -16,6 +16,17 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        sourceSets.test.resources.srcDirs += ["src/test/test_resources"]
+//        sourceSets {
+//            main {
+//                assets.srcDirs = ['src/main/assets']
+//            }
+//            test{
+//                resources.srcDirs += ["src/test/test_resources"]
+//
+//            }
+//        }
+
     }
 
     testOptions {
@@ -86,13 +97,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     //noinspection GradleDependency
     androidTestImplementation 'androidx.test:rules:1.1.0'
-    // Optional -- Mockito framework
-    testImplementation 'org.mockito:mockito-core:2.7.22'
+    testImplementation 'org.mockito:mockito-core:2.7.22' //local test mock
+    testImplementation 'org.robolectric:robolectric:4.4' //local tests
     //Fragments
     def fragment_version = "1.2.5"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
-
-
-
 
 }

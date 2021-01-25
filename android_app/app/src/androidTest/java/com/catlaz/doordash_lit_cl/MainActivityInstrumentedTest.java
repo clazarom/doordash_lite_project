@@ -48,7 +48,6 @@ public class MainActivityInstrumentedTest {
         //Launch MainActivity
         mMainActivity = activityTestRule.getActivity();
         mMainActivity.getSupportFragmentManager().beginTransaction();
-
     }
 
     @After

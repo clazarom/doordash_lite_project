@@ -17,7 +17,7 @@
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
 
-        <activity android:name="com.catlaz.doordash_lit_cl.SplashScreen"
+        <activity android:name="com.catlaz.doordash_lit_cl.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>

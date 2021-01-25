@@ -159,7 +159,7 @@ public class RestClient {
     private RestaurantDetail successfulDetailResponse(Response<RestaurantDetail> response){
         Log.d(_TAG, "Process GET restaurant response");
 
-        RestaurantDetail rDetail = new RestaurantDetail();
+        RestaurantDetail rDetail = null;
         if (response.body() != null) {
             //Log body DEBUG
             if (BuildConfig.DEBUG_MODE)

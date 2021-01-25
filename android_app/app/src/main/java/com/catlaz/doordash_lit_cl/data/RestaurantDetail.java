@@ -10,6 +10,24 @@ public class RestaurantDetail {
     private boolean offers_pickup;
     private int id;
 
+    /**
+     * Constructor
+     * @param phone_number phone_number
+     * @param address address
+     * @param delivery_radius delivery_radius
+     * @param price_range price_range
+     * @param offers_pickup offers_pickup
+     * @param id id
+     */
+    public RestaurantDetail(String phone_number, Address address, int delivery_radius, int price_range, boolean offers_pickup, int id) {
+        this.phone_number = phone_number;
+        this.address = address;
+        this.delivery_radius = delivery_radius;
+        this.price_range = price_range;
+        this.offers_pickup = offers_pickup;
+        this.id = id;
+    }
+
     //Getter and setter for offers_pickup
     public boolean isOffers_pickup() { return offers_pickup; }
     public void setOffers_pickup(boolean offers_pickup) { this.offers_pickup = offers_pickup; }
