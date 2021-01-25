@@ -25,6 +25,8 @@ The specific versions of languages and tools used in these project are:
 To setup the environment, close/download the GitHub repo. Then, on Android Studio, navigate to import the project:
 File > Open > (navigate to)../android_app
 
+To build a signed RELEASE version of the application, the files 'keystore_ddlit.jks'--the keystore-- and  'keystore.properties'--passwords and aliases to access the keystore-- need to be download and pasted into the repo independently.
+
 *NOTE: Some locally built files may be modified and already marked by git as modified, since the .gitignore file is not finished
 
 ## Run the app
@@ -50,10 +52,15 @@ An extra screen has been developed to show the stores in a map -- however, its f
 
 # Testing
 
+*NOTE: InstrumentedTests can only be run with a DEBUG build of the application.
+
 The testing units developed are designed to verify:
+- NetworkStateManager - to check if there is Internet connection (used when the app is first launched)
+- REST API calls to the server {GET restaurant list , GET restaurant detail}
+- The data model (UpdatedValues.class) - to test that inserting, retrieving and consuming data work as expected
 - The restaurant listview - both generating mock local values and requesting real store data from the server
 - MainActivity navigation - between the PagerViwer fragmetns as well as transitioning between the mainList and detailItem
-- REST API calls to the server {GET restaurant list , GET restaurant detail}
+- SplashActivity - launching, networkstate and notification
 
 
 ##Troubleshooting Testing
