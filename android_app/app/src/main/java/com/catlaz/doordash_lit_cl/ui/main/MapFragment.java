@@ -60,11 +60,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         drawMainMarker(googleMap, ddHeadquarters);
     }
 
+    /**
+     * Method to draw the main marker value and center the map view around it
+     * @param googleMap
+     * @param position
+     */
     private void drawMainMarker(GoogleMap googleMap, LatLng position){
+        //Move camera to show market
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+        //Zoom in
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(Constant._ZOOM_CITY));
+
+        //Place market
         googleMap.addMarker(new MarkerOptions()
                 .position(position)
                 .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(position));
-
     }
 }

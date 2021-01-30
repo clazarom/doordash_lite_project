@@ -46,4 +46,10 @@ public class Constant {
     @StringRes
     public static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2}; // Tab names
 
+    //Map Fragment
+    public static final int _ZOOM_WORLD = 1;
+    public static final int _ZOOM_CITY = 10;
+    public static final int _ZOOM_STREETS = 15;
+    public static final int _ZOOM_BUILDING = 20;
+
 }
