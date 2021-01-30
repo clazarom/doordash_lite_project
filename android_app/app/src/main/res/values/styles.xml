@@ -44,7 +44,10 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <!-- AlertDialog -->
+    <style name="RequestPermissionDialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
 
+    </style>
 
     <!-- ViewPager Style -->
     <!-- Tabs -->

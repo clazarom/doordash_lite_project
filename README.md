@@ -29,6 +29,16 @@ To build a signed RELEASE version of the application, the files 'keystore_ddlit.
 
 *NOTE: Some locally built files may be modified and already marked by git as modified, since the .gitignore file is not finished
 
+## Project organization
+
+### Android
+
+### Google API project
+A paralel project has been created in the Google Cloud Platform to make use of the following Google Services:
+- Maps, setup following the [documentation](https://developers.google.com/maps/documentation/android-sdk/config)
+
+A retricted API key has been created for only doordash_lit(e) app to access and request services, as described in the [documentation](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+
 ## Run the app
 After the initial setup, the Android Studio should be ready to build and run - either on a virtual device or a physical android phone.
 
@@ -46,9 +56,6 @@ Additionally, the user can click on a restaurant/element to open a new screen wi
 
 - Internet: to retrieve the restaurants information, the phone needs a data connection. If not, the app will be stuck in the initial 'Splash' screen.
 
-## Future work
-
-An extra screen has been developed to show the stores in a map -- however, its functionality is still being built
 
 # Testing
 
