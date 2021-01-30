@@ -15,8 +15,8 @@ import java.util.Map;
 public class MockData {
     public static final int _REST_NUM = 3;
     // Restaurants list and image map
-    private static List<Restaurant> restaurantList;
-    private static Map<Integer, Bitmap> restaurantLogoMap;
+    private static List<Restaurant> newRestaurantList;
+    private static Map<Integer, Restaurant> restaurantMap;
     //RestaurantDetail list
     private static Map<Integer, RestaurantDetail> restaurantDetailMap;
 
@@ -25,15 +25,14 @@ public class MockData {
      * Initialize MockData values
      */
     public static void initialize(Bitmap testLogoRestaurant) {
-        //Restaurant List
-        restaurantList = new ArrayList<>();
-        restaurantList.add(new Restaurant(1, "katsu burger", "burgers, korean", "url"));
-        restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
-        restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
-        //Restaurant logos Map
-        restaurantLogoMap = new HashMap<>();
-        for (int i=1; i<= _REST_NUM; i++)
-            restaurantLogoMap.put(i, testLogoRestaurant);
+        //Restaurant List and Map
+        newRestaurantList = new ArrayList<>();
+        restaurantMap = new HashMap<>();
+
+        addRestaurant(new Restaurant(1, "katsu burger", "burgers, korean", "url"), testLogoRestaurant);
+        addRestaurant(new Restaurant(2, "howl at the moon", "italian, pasta", "url"), testLogoRestaurant);
+        addRestaurant(new Restaurant(3, "pagliaci", "italian, pizza", "url"), testLogoRestaurant);
+
 
         //Restaurant Detail Map
         restaurantDetailMap = new HashMap<>();
@@ -50,17 +49,23 @@ public class MockData {
 
     }
 
+    private static void addRestaurant (Restaurant restaurant, Bitmap image){
+        newRestaurantList.add(restaurant);
+        restaurant.setBitmap_img(image);
+        restaurantMap.put(restaurant.getId(), restaurant);
+    }
+
     /**
      * Getter for restaurantList
      * @return restaurantList
      */
-    public static List<Restaurant> getRestaurantList(){ return restaurantList;}
+    public static List<Restaurant> getNewRestaurantList(){ return newRestaurantList;}
 
     /**
      * Getter for restaurantLogoMap
      * @return restaurantList <Integer, Bitmap>
      */
-    public static Map<Integer, Bitmap> getRestaurantLogoMap(){ return restaurantLogoMap;}
+    public static Map<Integer, Restaurant> getRestaurantMap(){ return restaurantMap;}
 
     /**
      * Getter for restaurantIntegerMap
