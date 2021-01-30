@@ -49,6 +49,19 @@
         android:background="@drawable/layout_square_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+    <fragment
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:id = "@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/no_map_margin"
+        android:padding="@dimen/no_map_padding"
+        android:background="@drawable/layout_square_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
