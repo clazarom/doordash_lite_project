@@ -1,5 +1,6 @@
 # doordash_lite_caterina
-A simple version of the DoorDahs app.
+Take home project: a lite version of the DoorDahs app. 
+It retrieves store data from DoorDash's server, and displays the restaurants info both in a list and in a map. Additional details are show when clicking on a list element.
 
 # Getting started
 
