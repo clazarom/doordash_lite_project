@@ -184,16 +184,17 @@ public class RestClient {
         //1. Process received images - to BitMap
         //Compute Image - NOTE !!! Network Operation cannot be in Main/ UI Thread
         AsyncTask.execute (() -> {
-            Map<Integer, Bitmap> rImagesMap = new HashMap<>();
+            Map<Integer, Restaurant> rMap = new HashMap<>();
             for (Restaurant restaurant : rList)
                 try {
                     Bitmap bitmap = BitmapFactory.decodeStream(new URL(restaurant.getCover_img_url()).openConnection().getInputStream());
-                    rImagesMap.put(restaurant.getId(), bitmap);
+                    restaurant.setBitmap_img(bitmap);
+                    rMap.put(restaurant.getId(), restaurant);
                 } catch (IOException e) {
                     Log.e(_TAG, "Error processing restaurant image: " + e);
                 }
             //2. Update Data Interface
-            UpdatedValues.Instance().updateRestaurants(rList, rImagesMap);
+            UpdatedValues.Instance().updateRestaurants(rList, rMap);
             //3. Notify UI of changes
             broadcastUpdateUI(Constant._UPDATE_LIST_KEY);
         });

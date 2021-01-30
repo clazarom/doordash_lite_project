@@ -73,7 +73,7 @@ public class DetailFragment extends Fragment implements APIBroadcastListener {
         tv.setText(description);
         //image
         ImageView image = view.findViewById(R.id.restaurant_image_detail);
-        image.setImageBitmap(UpdatedValues.Instance().getRestaurantImageMap().get(id));
+        image.setImageBitmap(UpdatedValues.Instance().getRestaurantMap().get(id).getBitmap_img());
 
         //telephone
         telephoneView = view.findViewById(R.id.restaurant_telephone_number);

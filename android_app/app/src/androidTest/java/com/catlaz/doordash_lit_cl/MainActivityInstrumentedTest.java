@@ -189,7 +189,7 @@ public class MainActivityInstrumentedTest {
             //4. Check details restaurant is displayed:
             onView(withId(R.id.fragment_rest_detail)).check(matches(isDisplayed()));
             //Also, check that the data display matches the Restaurant
-            Restaurant restaurant = restaurantsFragment.getRestaurantListAdapter().getRestaurantsList().get(randomPosition);
+            Restaurant restaurant = restaurantsFragment.getRestaurantListAdapter().getRestaurantsMap().get(randomPosition);
             onView(withId(R.id.restaurant_name_detail)).check(matches(withText(restaurant.getName())));
             onView(withId(R.id.restaurant_description_detail)).check(matches(withText(restaurant.getDescription())));
 

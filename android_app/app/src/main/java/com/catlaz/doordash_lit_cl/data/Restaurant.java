@@ -1,5 +1,7 @@
 package com.catlaz.doordash_lit_cl.data;
 
+import android.graphics.Bitmap;
+
 @SuppressWarnings("unused")
 public class Restaurant {
 
@@ -8,6 +10,8 @@ public class Restaurant {
     private String name;
     private String description; // type of food
     private String cover_img_url; //restaurant thumbnail url
+    //Extra field: converted image to BitMap
+    private Bitmap bitmap_img; //restaurant thumbnail url
 
     //Other fields
     private String display_delivery_fee;
@@ -21,7 +25,7 @@ public class Restaurant {
     private boolean is_consumer_subscription_eligible;
     private double promotion_delivery_fee;
     private int num_ratings;
-    private Address address;
+    private Location location;
     private int price_range;
 
 
@@ -54,4 +58,12 @@ public class Restaurant {
     //Cover_img_url getter and setter
     public String getCover_img_url() { return cover_img_url; }
     public void setCover_img_url(String cover_img_url) { this.cover_img_url = cover_img_url;  }
+
+    //Bitmap image getter and setter
+    public void setBitmap_img(Bitmap bitmap_img){this.bitmap_img = bitmap_img;}
+    public Bitmap getBitmap_img(){ return bitmap_img;}
+
+    //Address getter and setter
+    public void setLocation(Location location){this.location = location;}
+    public Location getLocation(){ return location;}
 }

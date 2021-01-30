@@ -119,11 +119,11 @@ public class RestaurantsFragment extends Fragment  implements APIBroadcastListen
 
 
         //Update contents of listview automatically
-        List<Restaurant> restaurantList = UpdatedValues.Instance().getRestaurantList();
+        List<Restaurant> restaurantList = UpdatedValues.Instance().getNewDownloadedRestaurantList();
         if (restaurantList.size()>0) {
             //If there is already data available...  update it!
-            rListAdapter.updateRestaurantList(UpdatedValues.Instance().getRestaurantList(),
-                    UpdatedValues.Instance().getRestaurantImageMap());
+            rListAdapter.updateRestaurantList(UpdatedValues.Instance().getNewDownloadedRestaurantList(),
+                    UpdatedValues.Instance().getRestaurantMap());
             showRestaurantsList(true);
         }else
             //If not, request from server
@@ -160,11 +160,11 @@ public class RestaurantsFragment extends Fragment  implements APIBroadcastListen
 
     @Override
     public void updateUI(){
-        List<Restaurant> restaurantsToUpdate = UpdatedValues.Instance().getRestaurantList();
+        List<Restaurant> restaurantsToUpdate = UpdatedValues.Instance().getNewDownloadedRestaurantList();
         if (restaurantsToUpdate.size()>0) {
             //Update restaurant list
             rListAdapter.updateRestaurantList(restaurantsToUpdate,
-                    UpdatedValues.Instance().getRestaurantImageMap());
+                    UpdatedValues.Instance().getRestaurantMap());
             //Consume updated values
             UpdatedValues.Instance().cleanRestaurants();
             //Visible
@@ -251,7 +251,7 @@ public class RestaurantsFragment extends Fragment  implements APIBroadcastListen
      */
     private void onClickMore(){
         Log.d(_TAG, "onClickLoadMore");
-        int offset = rListAdapter.getRestaurantsList().size();
+        int offset = rListAdapter.getRestaurantsMap().size();
         //Get restaurants from DoorDash server: async call
         restClient.getRestaurantsListByDoorDashHQ(offset, Constant._REQ_NUM); // NEW METHOD TO DEVELOP
 

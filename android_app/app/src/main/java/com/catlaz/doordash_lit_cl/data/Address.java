@@ -55,6 +55,10 @@ public class Address {
 
     }
 
+    //latitude and longitude getter
+    public double getLat() { return lat; }
+    public double getLng() { return lng; }
+
     @Override
     public String toString(){ return printable_address;}
 

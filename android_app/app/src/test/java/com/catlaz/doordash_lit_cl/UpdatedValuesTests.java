@@ -55,12 +55,12 @@ public class UpdatedValuesTests {
         //1. Add new list and check it's accessible
         UpdatedValues.Instance().updateRestaurants(MockData.getRestaurantList(), MockData.getRestaurantLogoMap());
         //Check size of the LIST and values
-        int restaurantListSize = UpdatedValues.Instance().getRestaurantList().size();
+        int restaurantListSize = UpdatedValues.Instance().getNewDownloadedRestaurantList().size();
         assertEquals(restaurantListSize, _REST_NUM);
         //Check last and first restaurant's ids
-        assertEquals(UpdatedValues.Instance().getRestaurantList().get(0).getId(),
+        assertEquals(UpdatedValues.Instance().getNewDownloadedRestaurantList().get(0).getId(),
                 MockData.getRestaurantList().get(0).getId());
-        assertEquals(UpdatedValues.Instance().getRestaurantList().get(restaurantListSize-1).getId(),
+        assertEquals(UpdatedValues.Instance().getNewDownloadedRestaurantList().get(restaurantListSize-1).getId(),
                 MockData.getRestaurantList().get(_REST_NUM-1).getId());
         //Check size of the MAP
         assertEquals(UpdatedValues.Instance().getRestaurantImageMap().size(), _REST_NUM);
@@ -69,7 +69,7 @@ public class UpdatedValuesTests {
 
         //2.Clean values
         UpdatedValues.Instance().cleanRestaurants();
-        assertEquals(UpdatedValues.Instance().getRestaurantList().size(), 0);
+        assertEquals(UpdatedValues.Instance().getNewDownloadedRestaurantList().size(), 0);
         assertEquals(UpdatedValues.Instance().getRestaurantImageMap().size(), _REST_NUM);
 
     }

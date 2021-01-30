@@ -21,8 +21,8 @@ public class UpdatedValues {
     private static UpdatedValues updatedValues;
 
     //Last downloaded restaurant values
-    private final List<Restaurant> restaurantList;
-    private final Map<Integer, Bitmap> restaurantImagesMap;
+    private final List<Restaurant> newDownloadedRestaurantList;
+    private final Map<Integer, Restaurant> restaurantMap;
     private final Map<Integer, RestaurantDetail> restaurantDetailsMap;
 
 
@@ -31,9 +31,9 @@ public class UpdatedValues {
      */
     private UpdatedValues() {
         //Init restaurant list
-        restaurantList = new ArrayList<>();
-        restaurantImagesMap = new HashMap<>();
+        newDownloadedRestaurantList = new ArrayList<>();
         restaurantDetailsMap = new HashMap<>();
+        restaurantMap = new HashMap<>();
     }
 
     /**
@@ -56,10 +56,10 @@ public class UpdatedValues {
      * Update restaurant's list and compute each restaurants image thumbnail
      * @param restaurantList list of restaurants
      */
-    public void updateRestaurants(List<Restaurant> restaurantList, Map<Integer, Bitmap> restaurantImagesMap){
+    public void updateRestaurants(List<Restaurant> restaurantList, Map<Integer, Restaurant> restaurantMap){
         Log.d(_TAG, "Update restaurant list: "+restaurantList.size());
-        this.restaurantList.addAll(restaurantList);
-        this.restaurantImagesMap.putAll(restaurantImagesMap);
+        this.newDownloadedRestaurantList.addAll(restaurantList);
+        this.restaurantMap.putAll(restaurantMap);
     }
 
     /**
@@ -72,8 +72,8 @@ public class UpdatedValues {
     }
 
     //Getters
-    public List<Restaurant> getRestaurantList(){ return restaurantList;}
-    public Map<Integer,Bitmap> getRestaurantImageMap(){ return restaurantImagesMap;}
+    public List<Restaurant> getNewDownloadedRestaurantList(){ return newDownloadedRestaurantList;}
+    public Map<Integer,Restaurant> getRestaurantMap(){ return restaurantMap;}
     public Map<Integer,RestaurantDetail> getRestaurantDetailMap(){ return restaurantDetailsMap;}
 
 
@@ -81,6 +81,6 @@ public class UpdatedValues {
      *     Consume items in restaurant list and its image map
      */
     public void cleanRestaurants(){
-        restaurantList.clear();
+        newDownloadedRestaurantList.clear();
     }
 }
