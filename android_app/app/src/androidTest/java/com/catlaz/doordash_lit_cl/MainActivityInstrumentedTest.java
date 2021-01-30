@@ -25,7 +25,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.catlaz.doordash_lit_cl.ui.main.RestaurantsFragment._REQ_NUM;
+import static com.catlaz.doordash_lit_cl.Constant._REQ_NUM;
 import static org.hamcrest.Matchers.anything;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;

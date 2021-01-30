@@ -1,30 +1,26 @@
 package com.catlaz.doordash_lit_cl;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Process;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.catlaz.doordash_lit_cl.remote.RestClient;
 import com.catlaz.doordash_lit_cl.utils.NetworkStateManager;
-import com.catlaz.doordash_lit_cl.utils.PermissionsAlertDialogBuilder;
+import com.catlaz.doordash_lit_cl.ui.splash.PermissionsAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 
 /**
@@ -39,8 +35,6 @@ public class SplashActivity extends AppCompatActivity {
     private static final String _TAG = "SPLASH_ACTIVITY";
     //Local fields
     private Context mContext;
-    private static final int _SPLASH_DISPLAY_LENGTH = 5; //seconds
-    public static final int _INIT_REQ_NUM = 50;
 
     //Request permissions
     PermissionsAlertDialogBuilder permissionsAlertDialogBuilder;
@@ -114,10 +108,10 @@ public class SplashActivity extends AppCompatActivity {
 
             // close this activity
             this.finish();
-        }, _SPLASH_DISPLAY_LENGTH*1000);
+        }, Constant._SPLASH_DISPLAY_LENGTH*1000);
 
         //Internet Downloads in advance
-        new RestClient(this).getRestaurantsListByDoorDashHQ(0, _INIT_REQ_NUM);
+        new RestClient(this).getRestaurantsListByDoorDashHQ(0, Constant._INIT_REQ_NUM);
     }
 
     /* ******************************************************************
@@ -136,32 +130,9 @@ public class SplashActivity extends AppCompatActivity {
                 runSplashActions();
             } else {
                 // Permission denied, boo!
-
-                //Build a PermissionsAlertDialog
+                //Show the PermissionsAlertDialogBuilder
                  permissionsAlertDialogBuilder.show();
 
-//                new AlertDialog.Builder(this)
-//                        .setTitle("Permission required")
-//                        .setMessage("Without this permission Maps do not work, allow it in order to connect to the device.")
-//                        .setPositiveButton("Retry", (dialog, which) -> {
-//                            // try again
-//                            if (needRationale) {
-//                                // the "never ask again" flash is not set, try again with permission request
-//                                this.requestPermissions();
-//                            } else {
-//                                // the "never ask again" flag is set so the permission requests is disabled, try open app settings to enable the permission
-//                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//                                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
-//                                intent.setData(uri);
-//                                this.startActivity(intent);
-//                            }
-//                        })
-//                        .setNegativeButton("Exit application", (dialog, which) -> {
-//                            // without permission exit is the only way
-//                            this.finish();
-//                            Process.killProcess(Process.myPid());
-//                        })
-//                        .show();
             }
         } else {
             Log.w(_TAG, "Permission request not recognized");

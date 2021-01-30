@@ -6,24 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.catlaz.doordash_lit_cl.Constant;
+import com.catlaz.doordash_lit_cl.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.catlaz.doordash_lit_cl.R;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * Main Fragment of the Main Activity, displaying a viewPager. Currently, we have two page fragments:
  * - RestaurantsFragment: to display a list of restaurants
- * - Map Fragment: to show a map with the location of those fragments <TODO> - not implemented yet
+ * - Map Fragment: to show a map with the location of those fragments
  *
  * @author Caterina Lazaro
  * @version 1.0 Jan 2021
@@ -31,12 +27,6 @@ import androidx.viewpager2.widget.ViewPager2;
 public class MainFragment extends Fragment {
     private static final String _TAG = "MAIN_FRAGMENT";
 
-    //Fragments
-    //public static final int NUM_ITEMS = 2;
-    private static final List<Fragment> fragmentPages = Collections.unmodifiableList(
-            new ArrayList<Fragment>(){{add(new RestaurantsFragment()); add(new MapFragment()); }});
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2}; // Tab names
     //Pager
     FragmentPagesCollectionAdapter fragmentPagesCollectionAdapter;
     ViewPager2 viewPager;
@@ -46,7 +36,7 @@ public class MainFragment extends Fragment {
      * @return current fragment
      */
     public Fragment getCurrentPage(){
-        return fragmentPages.get(viewPager.getCurrentItem());
+        return Constant.fragmentPages.get(viewPager.getCurrentItem());
     }
 
 
@@ -63,7 +53,7 @@ public class MainFragment extends Fragment {
 
 
         //Initialize ViewPager2
-        fragmentPagesCollectionAdapter = new FragmentPagesCollectionAdapter(this, fragmentPages);
+        fragmentPagesCollectionAdapter = new FragmentPagesCollectionAdapter(this, Constant.fragmentPages);
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(fragmentPagesCollectionAdapter);
@@ -76,7 +66,7 @@ public class MainFragment extends Fragment {
         //Tabs
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText(this.getResources().getString(TAB_TITLES[position]))).attach();
+                (tab, position) -> tab.setText(this.getResources().getString(Constant.TAB_TITLES[position]))).attach();
 
 
     }

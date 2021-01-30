@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
-import static com.catlaz.doordash_lit_cl.SplashActivity._INIT_REQ_NUM;
+import static com.catlaz.doordash_lit_cl.Constant._INIT_REQ_NUM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.catlaz.doordash_lit_cl.BuildConfig;
+import com.catlaz.doordash_lit_cl.Constant;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
@@ -32,22 +33,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import static com.catlaz.doordash_lit_cl.Constant._OK;
+import static com.catlaz.doordash_lit_cl.Constant._CONFLICT;
+
 
 public class RestClient {
     private static final String _TAG = "REST_CLIENT";
-
-    //Broadcast messages
-    public static final String _BROADCAST_API_UPDATE = "API_UPDATE";
-    public static final String _UPDATE_LIST_KEY = "update_list";
-    public static final String _UPDATE_DETAIL_KEY = "update_detail";
-
-    //DoorDash URL constants
-    public static final String SERVER_HOST_NAME = "api.doordash.com";
-    private static final String _DD_URL = "https://api.doordash.com" ;
-
-    //HTTP codes
-    private static final int _OK = 200;
-    private static final int _CONFLICT = 409;
 
     //API interface
     private final ApiInterface restAPI;
@@ -77,7 +68,7 @@ public class RestClient {
                 .create();
         //Retrofit fields
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(_DD_URL)
+                .baseUrl(Constant._DD_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //receive Observable, Flowable, Single, Completable or Maybe <Call>
                 .client(httpClient.getOkHttpClient())
@@ -94,7 +85,7 @@ public class RestClient {
      */
     private void broadcastUpdateUI(String key) {
         Log.i(_TAG,"Sending a Message to UI");
-        Intent intent = new Intent(_BROADCAST_API_UPDATE);
+        Intent intent = new Intent(Constant._BROADCAST_API_UPDATE);
         intent.putExtra(key,true);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
@@ -204,7 +195,7 @@ public class RestClient {
             //2. Update Data Interface
             UpdatedValues.Instance().updateRestaurants(rList, rImagesMap);
             //3. Notify UI of changes
-            broadcastUpdateUI(_UPDATE_LIST_KEY);
+            broadcastUpdateUI(Constant._UPDATE_LIST_KEY);
         });
     }
 
@@ -284,7 +275,7 @@ public class RestClient {
      */
     public void getRestaurantsListByDoorDashHQ(int offset, int limit) {
         Log.d(_TAG, "Call DoorDash request stores: [offset: ,"+offset+", limit: "+limit+"]");
-        getRestaurantsList("DoorDash", 37.422740, -122.139956, offset, limit);
+        getRestaurantsList("DoorDash", Constant._DD_HQ_LAT, Constant._DD_HQ_LONG, offset, limit);
     }
 
     /**
@@ -297,7 +288,7 @@ public class RestClient {
      */
     public List<Restaurant> testRestaurantsListByDoorDashHQ(int offset, int limit) {
         Log.d(_TAG, "Call test DoorDash request stores");
-        return getRestaurantsListSync("DoorDash", 37.422740, -122.139956, offset, limit);
+        return getRestaurantsListSync("DoorDash", Constant._DD_HQ_LAT, Constant._DD_HQ_LONG, offset, limit);
     }
 
     /**
@@ -322,7 +313,7 @@ public class RestClient {
                     //2. Update Data Interface
                     UpdatedValues.Instance().addRestaurantDetail(rDetail);
                     //3. Notify UI of changes
-                    broadcastUpdateUI(_UPDATE_DETAIL_KEY);
+                    broadcastUpdateUI(Constant._UPDATE_DETAIL_KEY);
                 }
 
                 @Override

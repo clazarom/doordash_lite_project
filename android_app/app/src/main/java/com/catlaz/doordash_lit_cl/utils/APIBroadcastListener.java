@@ -1,4 +1,4 @@
-package com.catlaz.doordash_lit_cl.ui.main;
+package com.catlaz.doordash_lit_cl.utils;
 
 /**
  * Interface used by the APIUpdateBroadcastReceiver to implement a callback to update the

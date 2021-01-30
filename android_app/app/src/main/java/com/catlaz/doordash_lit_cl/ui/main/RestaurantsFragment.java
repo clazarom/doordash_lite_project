@@ -15,10 +15,13 @@ import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.catlaz.doordash_lit_cl.Constant;
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
+import com.catlaz.doordash_lit_cl.utils.APIBroadcastListener;
+import com.catlaz.doordash_lit_cl.utils.APIUpdateBroadcastReceiver;
 
 import java.util.List;
 
@@ -39,10 +42,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * @author Caterina lazaro
  * @version 1.0 Jan 2021
  */
-public class RestaurantsFragment extends Fragment  implements  APIBroadcastListener{
+public class RestaurantsFragment extends Fragment  implements APIBroadcastListener {
     private static final String _TAG = "RESTAURANTS_FRAGMENT";
-
-    public static final int _REQ_NUM = 10;
 
     //Restaurants list adapter
     private RestaurantListAdapter rListAdapter;
@@ -114,7 +115,7 @@ public class RestaurantsFragment extends Fragment  implements  APIBroadcastListe
         //RestClient
         restClient= new RestClient(getContext());
         receiver = new APIUpdateBroadcastReceiver(this); // Create the receiver
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(Constant._BROADCAST_API_UPDATE)); // Register
 
 
         //Update contents of listview automatically
@@ -126,7 +127,7 @@ public class RestaurantsFragment extends Fragment  implements  APIBroadcastListe
             showRestaurantsList(true);
         }else
             //If not, request from server
-            restClient.getRestaurantsListByDoorDashHQ(0, _REQ_NUM);
+            restClient.getRestaurantsListByDoorDashHQ(0, Constant._REQ_NUM);
 
     }
 
@@ -139,7 +140,7 @@ public class RestaurantsFragment extends Fragment  implements  APIBroadcastListe
         Log.d(_TAG, "onResume");
 
         //Register broadcast receiver
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(Constant._BROADCAST_API_UPDATE)); // Register
     }
 
     /**
@@ -235,7 +236,7 @@ public class RestaurantsFragment extends Fragment  implements  APIBroadcastListe
     private void onClickRefresh(){
         Log.d(_TAG, "onClickRefresh");
         //Get restaurants from Doordash server: async call
-        restClient.getRestaurantsListByDoorDashHQ(0,_REQ_NUM);
+        restClient.getRestaurantsListByDoorDashHQ(0,Constant._REQ_NUM);
         //Clear the listview
         if (rListAdapter != null)
             rListAdapter.clearRestaurantList();
@@ -252,7 +253,7 @@ public class RestaurantsFragment extends Fragment  implements  APIBroadcastListe
         Log.d(_TAG, "onClickLoadMore");
         int offset = rListAdapter.getRestaurantsList().size();
         //Get restaurants from DoorDash server: async call
-        restClient.getRestaurantsListByDoorDashHQ(offset, _REQ_NUM); // NEW METHOD TO DEVELOP
+        restClient.getRestaurantsListByDoorDashHQ(offset, Constant._REQ_NUM); // NEW METHOD TO DEVELOP
 
     }
 

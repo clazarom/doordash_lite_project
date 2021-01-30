@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.catlaz.doordash_lit_cl.Constant;
 import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
+import com.catlaz.doordash_lit_cl.utils.APIBroadcastListener;
+import com.catlaz.doordash_lit_cl.utils.APIUpdateBroadcastReceiver;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +28,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * @author Caterina lazaro
  * @version 1.0 Jan 2021
  */
-public class DetailFragment extends Fragment implements APIBroadcastListener{
+public class DetailFragment extends Fragment implements APIBroadcastListener {
     private static final String _TAG= "DETAIL_FRAGMENT";
 
     //Details on UI
@@ -80,7 +83,7 @@ public class DetailFragment extends Fragment implements APIBroadcastListener{
         restClient = new RestClient(getContext());
         restClient.getRestaurantDetail(id);
         receiver = new APIUpdateBroadcastReceiver(this); // Create the receiver
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(Constant._BROADCAST_API_UPDATE)); // Register
     }
 
     @Override
@@ -102,7 +105,7 @@ public class DetailFragment extends Fragment implements APIBroadcastListener{
         Log.d(_TAG, "onResume");
 
         //Register broadcast receiver
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(RestClient._BROADCAST_API_UPDATE)); // Register
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter(Constant._BROADCAST_API_UPDATE)); // Register
     }
 
     @Override

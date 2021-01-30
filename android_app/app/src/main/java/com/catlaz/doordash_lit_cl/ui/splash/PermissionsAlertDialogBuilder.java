@@ -1,4 +1,4 @@
-package com.catlaz.doordash_lit_cl.utils;
+package com.catlaz.doordash_lit_cl.ui.splash;
 
 import android.app.Activity;
 import android.app.AlertDialog;

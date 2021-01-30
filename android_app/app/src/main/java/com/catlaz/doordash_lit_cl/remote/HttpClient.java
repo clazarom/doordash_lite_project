@@ -9,7 +9,7 @@ import javax.net.ssl.HostnameVerifier;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-import static com.catlaz.doordash_lit_cl.remote.RestClient.SERVER_HOST_NAME;
+import static com.catlaz.doordash_lit_cl.Constant.SERVER_HOST_NAME;
 
 /**
  * Class to manage http connections
