@@ -71,7 +71,7 @@ The testing units developed are designed to verify:
 - SplashActivity - launching, networkstate and notification
 
 
-##Troubleshooting Testing
+## Troubleshooting Testing
 
 ** Possible causes for tests failing | Troubleshooting
 

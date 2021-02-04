@@ -30,7 +30,7 @@ import java.util.Map;
 public class RestaurantListAdapter extends BaseAdapter {
     private static final String _TAG = "RESTAURANT_LIST_ADAPTER";
 
-    private final List<Integer> restaurantsList;
+    private final List<Integer> restaurantIdsList;
     private final Map<Integer, Restaurant> restaurantMap;
 
     private final Context mContext;
@@ -42,7 +42,7 @@ public class RestaurantListAdapter extends BaseAdapter {
     public RestaurantListAdapter(Context context){
         Log.d(_TAG, "Create");
         mContext = context;
-        restaurantsList = new ArrayList<>();
+        restaurantIdsList = new ArrayList<>();
         restaurantMap = new HashMap<>();
     }
 
@@ -56,7 +56,7 @@ public class RestaurantListAdapter extends BaseAdapter {
         Log.d(_TAG, "Update list: "+list.size());
         if (list.size() > 0) {
             for (Restaurant restaurant: list)
-                restaurantsList.add(restaurant.getId());
+                restaurantIdsList.add(restaurant.getId());
         }
         if(map!=null && map.size() > 0)
             restaurantMap.putAll(map);
@@ -73,7 +73,7 @@ public class RestaurantListAdapter extends BaseAdapter {
      * Reset the contents of the list adapter
      */
     public void clearRestaurantList(){
-        restaurantsList.clear();
+        restaurantIdsList.clear();
         restaurantMap.clear();
         notifyDataSetChanged(); //update change
 
@@ -85,7 +85,7 @@ public class RestaurantListAdapter extends BaseAdapter {
      * @param i position
      */
     private void updateItemView(View itemView, int i){
-        Restaurant restaurant = restaurantMap.get(restaurantsList.get(i));
+        Restaurant restaurant = restaurantMap.get(restaurantIdsList.get(i));
         //Add the thumbnail image -- user Bitmap
         ImageView image = itemView.findViewById(R.id.restaurant_image_thumb);
         image.setImageBitmap(restaurant.getBitmap_img());
@@ -99,16 +99,16 @@ public class RestaurantListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.d(_TAG, "Get count: "+restaurantsList.size());
+        Log.d(_TAG, "Get count: "+ restaurantIdsList.size());
 
-        return restaurantsList.size();
+        return restaurantIdsList.size();
     }
 
     @Override
     public Object getItem(int i) {
 //        Log.d(_TAG, "Get item: "+restaurantsList.get(i).getId());
 
-        return restaurantsList.get(i);
+        return restaurantIdsList.get(i);
     }
 
     @Override

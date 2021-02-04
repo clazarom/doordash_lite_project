@@ -23,7 +23,9 @@ import com.catlaz.doordash_lit_cl.remote.RestClient;
 import com.catlaz.doordash_lit_cl.utils.APIBroadcastListener;
 import com.catlaz.doordash_lit_cl.utils.APIUpdateBroadcastReceiver;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -214,10 +216,12 @@ public class RestaurantsFragment extends Fragment  implements APIBroadcastListen
     final AdapterView.OnItemClickListener listOnItemClickListener = (adapterView, view, i, l) -> {
         Log.v(_TAG, "onItemClick view restaurants_list");
         //Open another screen with the restaurant's details
+        Map<Integer, Restaurant> restaurantHashMap = UpdatedValues.Instance().getRestaurantMap();
+        Restaurant restaurant = restaurantHashMap.get(rListAdapter.getItem(i)); //TODO (review structure)
         Bundle bundle = new Bundle();
-        bundle.putString("name", ((Restaurant) rListAdapter.getItem(i)).getName());
-        bundle.putInt("id", ((Restaurant) rListAdapter.getItem(i)).getId());
-        bundle.putString("description", ((Restaurant) rListAdapter.getItem(i)).getDescription());
+        bundle.putInt("id", restaurant.getId());
+        bundle.putString("name", restaurant.getName());
+        bundle.putString("description", restaurant.getDescription());
 
 
         //Fragment holder initialize
