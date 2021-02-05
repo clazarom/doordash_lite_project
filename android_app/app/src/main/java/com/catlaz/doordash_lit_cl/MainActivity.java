@@ -1,5 +1,7 @@
 package com.catlaz.doordash_lit_cl;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
@@ -46,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> Snackbar.make(view, getResources().getString(R.string.app_my_info), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
 
+    }
+
+    /**
+     * Make the MainActivity Start Intent
+     * @param ctx context
+     * @return start intent
+     */
+    public static Intent makeStartIntent(Context ctx){
+        //Build MainActivity intent
+        return new Intent(ctx, MainActivity.class);
     }
 
     // Back navigation callback

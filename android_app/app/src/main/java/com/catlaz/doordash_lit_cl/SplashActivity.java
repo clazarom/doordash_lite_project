@@ -33,8 +33,6 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 public class SplashActivity extends AppCompatActivity {
 
     private static final String _TAG = "SPLASH_ACTIVITY";
-    //Local fields
-    private Context mContext;
 
     //Request permissions
     PermissionsAlertDialogBuilder permissionsAlertDialogBuilder;
@@ -47,15 +45,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set layout
         setContentView(R.layout.activity_splash);
         Log.d(_TAG, "On Create");
 
-        mContext = this;
-        View decorView = getWindow().getDecorView();
-        // Hide both the navigation bar and the status bar.
-        // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+        //Initialize Activity
+        initializeSplashActivity();
 
         //Request permissions
         final boolean needRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_COARSE_LOCATION);
@@ -67,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
         networkStateManager = new NetworkStateManager((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
         if (networkStateManager.isNetworkAvailable()) {
             Log.d(_TAG, "Internet enabled");
-            //Check if permissions are enabled
+            //If permissions are enabled, we run the application
             if(permissionsAlertDialogBuilder.requestPermissions(this))
                 runSplashActions();
             else
@@ -75,13 +71,24 @@ public class SplashActivity extends AppCompatActivity {
 
         } else {
             Log.d(_TAG, "No Internet connection");
-
+            //Show two notifications: Toast and Snackbar
             Toast.makeText(SplashActivity.this,
                     R.string.no_network_message_string,
                     Toast.LENGTH_SHORT).show();
 
             showNotification(getString(R.string.no_network_message_string));
         }
+    }
+
+    /**
+     * Set up Splash Screen parameters
+     */
+    private void initializeSplashActivity(){
+        // Hide both the navigation bar and the status bar.
+        // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     /**
@@ -102,9 +109,9 @@ public class SplashActivity extends AppCompatActivity {
         //Show SPLASH screen with a timer
         new Handler().postDelayed(() -> {
             // Start your app main activity
-            Intent i = new Intent(getBaseContext(), MainActivity.class);
+            Intent i = MainActivity.makeStartIntent(this);
             i.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // never navigate back here
-            mContext.startActivity(i);
+            this.startActivity(i);
 
             // close this activity
             this.finish();
@@ -138,9 +145,6 @@ public class SplashActivity extends AppCompatActivity {
             Log.w(_TAG, "Permission request not recognized");
         }
     }
-
-
-
 
 
 }
