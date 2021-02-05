@@ -1,12 +1,10 @@
 package com.catlaz.doordash_lit_cl.ui.splash;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
 

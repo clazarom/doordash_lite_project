@@ -5,8 +5,15 @@
     <!-- SPLASH ACTIVITY -->
     <string name="splash_text">DoorDash LIT(e)</string>
     <string name="floating_description">Floating info button</string>
+    <!-- Request Permissions -->
+    <string name ="map_permission_required_string">Without LOCATION permission Maps do not work, allow it in order to start the app.</string>
+    <string name ="enable_permissions_string">Please enable permissions: access location</string>
+    <string name ="permission_required_title_string">Permission required</string>
+    <!-- Network connection -->
+    <string name = "no_network_message_string">No Network Service!, Restart the application and switch ON the Network Service. </string>
+    <!-- Version -->
+    <string name = "version_string">Version </string>
 
-    <string name = "no_network_message_string">No Network Service!, Restart the application and switch ON the Network Service</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="app_my_info">Thank you for reviewing DoorDash Lit(e) - built by Caterina Lazaro</string>

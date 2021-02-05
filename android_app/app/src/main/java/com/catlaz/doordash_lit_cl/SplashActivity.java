@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.catlaz.doordash_lit_cl.remote.RestClient;
+import com.catlaz.doordash_lit_cl.utils.ApplicationConfigInformation;
 import com.catlaz.doordash_lit_cl.utils.NetworkStateManager;
 import com.catlaz.doordash_lit_cl.ui.splash.PermissionsAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,11 +29,11 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
  * Splash screen to load before the application starts
  *
  * @author Caterina Lazaro
- * @version 1.0 Jan 2021
+ * @version 1.1 Feb 2021
  */
 
 public class SplashActivity extends AppCompatActivity {
-
+    //Debug logging tag
     private static final String _TAG = "SPLASH_ACTIVITY";
 
     //Request permissions
@@ -56,8 +58,8 @@ public class SplashActivity extends AppCompatActivity {
         //Request permissions
         final boolean needRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_COARSE_LOCATION);
         permissionsAlertDialogBuilder =  new PermissionsAlertDialogBuilder(this,
-                "Without this permission Maps do not work, allow it in order to connect to the device.",
-                "Permission required", needRationale);
+                getString(R.string.map_permission_required_string),
+                getString(R.string.permission_required_title_string), needRationale);
 
         //Check network availability
         networkStateManager = new NetworkStateManager((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -67,7 +69,7 @@ public class SplashActivity extends AppCompatActivity {
             if(permissionsAlertDialogBuilder.requestPermissions(this))
                 runSplashActions();
             else
-                showNotification("Please enable permissions, Bluetooth connection to media devices");
+                showNotification(getString(R.string.enable_permissions_string));
 
         } else {
             Log.d(_TAG, "No Internet connection");
@@ -89,6 +91,12 @@ public class SplashActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+
+        //Update application version name
+        TextView versionName = findViewById(R.id.version_name_label);
+        String version = getString(R.string.version_string) + " " +
+                ApplicationConfigInformation.getApplicationVersionName();
+        versionName.setText(version);
     }
 
     /**
@@ -96,12 +104,13 @@ public class SplashActivity extends AppCompatActivity {
      * @param message notification-message
      */
     public void showNotification(String message){
+        //Show notification at bottom of the content
         if (this.findViewById(android.R.id.content) != null)
             Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE).show();
     }
 
     /**
-     * Method to run the functions SPLASH performs: after a delaye to show the logo, do
+     * Method to run the functions SPLASH performs: after a delay to show the logo, do
      * - Start MainActivity
      * - Download info in advance
      */

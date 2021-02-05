@@ -38,4 +38,19 @@
             app:layout_constraintTop_toBottomOf="@+id/splash_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/version_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:foregroundGravity="center_horizontal"
+            android:gravity="top|center_horizontal"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/splash_version_text_size"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal|center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

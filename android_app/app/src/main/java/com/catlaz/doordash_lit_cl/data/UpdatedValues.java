@@ -1,6 +1,5 @@
 package com.catlaz.doordash_lit_cl.data;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.ArrayList;

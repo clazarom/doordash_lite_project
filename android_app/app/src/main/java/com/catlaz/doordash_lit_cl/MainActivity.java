@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
+import com.catlaz.doordash_lit_cl.utils.ApplicationConfigInformation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -19,9 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
  * Main Activity, to host the frame holder and a floating action button
  *
  * @author Caterina Lazaro
- * @version 1.0 Jan 2021
+ * @version 1.1 Feb 2021
  */
 public class MainActivity extends AppCompatActivity {
+    //Debug logging tag
     private static final String _TAG = "MAIN_ACTIVITY";
 
     @Override
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Keep screen ON for debug mode
-        if(BuildConfig.DEBUG){
+        if(ApplicationConfigInformation.isDebugging()){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 

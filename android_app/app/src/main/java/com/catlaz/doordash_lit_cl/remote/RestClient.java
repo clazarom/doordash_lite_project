@@ -6,11 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import com.catlaz.doordash_lit_cl.BuildConfig;
 import com.catlaz.doordash_lit_cl.Constant;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.data.RestaurantDetail;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
+import com.catlaz.doordash_lit_cl.utils.ApplicationConfigInformation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -121,7 +121,7 @@ public class RestClient {
         List<Restaurant> rList = new ArrayList<>();
         if (response.body() != null) {
             //Log body DEBUG
-            if (BuildConfig.DEBUG_MODE)
+            if (ApplicationConfigInformation.isDebugging())
                 logBody(response.body().toString());
             //Process body's response
             switch (response.code()) {
@@ -153,7 +153,7 @@ public class RestClient {
         RestaurantDetail rDetail = null;
         if (response.body() != null) {
             //Log body DEBUG
-            if (BuildConfig.DEBUG_MODE)
+            if (ApplicationConfigInformation.isDebugging())
                 logBody(response.body().toString());
             //Process body's response
             switch (response.code()) {

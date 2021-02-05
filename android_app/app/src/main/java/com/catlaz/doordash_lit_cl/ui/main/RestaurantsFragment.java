@@ -23,7 +23,6 @@ import com.catlaz.doordash_lit_cl.remote.RestClient;
 import com.catlaz.doordash_lit_cl.utils.APIBroadcastListener;
 import com.catlaz.doordash_lit_cl.utils.APIUpdateBroadcastReceiver;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

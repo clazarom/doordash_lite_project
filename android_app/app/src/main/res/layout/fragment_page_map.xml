@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"/>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         class="com.google.android.gms.maps.SupportMapFragment"
         android:id = "@+id/map"
         android:layout_width="match_parent"

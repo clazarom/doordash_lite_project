@@ -3,7 +3,7 @@ package com.catlaz.doordash_lit_cl.remote;
 
 import android.util.Log;
 
-import com.catlaz.doordash_lit_cl.BuildConfig;
+import com.catlaz.doordash_lit_cl.utils.ApplicationConfigInformation;
 
 import javax.net.ssl.HostnameVerifier;
 import okhttp3.OkHttpClient;
@@ -49,7 +49,7 @@ public class HttpClient{
         OkHttpClient.Builder httpBuilder = okHttpClient.newBuilder()
                 .hostnameVerifier(hostnameVerifier);
         //Interceptor for logging  <TODO> use on debug only
-        if (BuildConfig.DEBUG_MODE) {
+        if (ApplicationConfigInformation.isDebugging()) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.level(HttpLoggingInterceptor.Level.BODY);
             httpBuilder.addInterceptor(interceptor);
