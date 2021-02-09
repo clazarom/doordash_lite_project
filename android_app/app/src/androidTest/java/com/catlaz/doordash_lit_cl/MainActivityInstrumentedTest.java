@@ -1,5 +1,7 @@
 package com.catlaz.doordash_lit_cl;
 
+import android.util.Log;
+
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
 import com.catlaz.doordash_lit_cl.ui.main.RestaurantsFragment;
@@ -15,6 +17,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.rule.ActivityTestRule;
+
+import java.util.Map;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -189,7 +193,10 @@ public class MainActivityInstrumentedTest {
             //4. Check details restaurant is displayed:
             onView(withId(R.id.fragment_rest_detail)).check(matches(isDisplayed()));
             //Also, check that the data display matches the Restaurant
-            Restaurant restaurant = restaurantsFragment.getRestaurantListAdapter().getRestaurantsMap().get(randomPosition);
+            int idClicked = (int) restaurantsFragment.getRestaurantListAdapter().getItemId(randomPosition);
+            Map<Integer, Restaurant> restaurantsMap = restaurantsFragment.getRestaurantListAdapter().getRestaurantsMap();
+            Restaurant restaurant = restaurantsMap.get(idClicked);
+
             onView(withId(R.id.restaurant_name_detail)).check(matches(withText(restaurant.getName())));
             onView(withId(R.id.restaurant_description_detail)).check(matches(withText(restaurant.getDescription())));
 

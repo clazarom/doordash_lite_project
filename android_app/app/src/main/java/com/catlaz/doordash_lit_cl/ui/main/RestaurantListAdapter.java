@@ -86,15 +86,18 @@ public class RestaurantListAdapter extends BaseAdapter {
      */
     private void updateItemView(View itemView, int i){
         Restaurant restaurant = restaurantMap.get(restaurantIdsList.get(i));
-        //Add the thumbnail image -- user Bitmap
-        ImageView image = itemView.findViewById(R.id.restaurant_image_thumb);
-        image.setImageBitmap(restaurant.getBitmap_img());
-        //Add the name of the restaurant
-        TextView restaurantName =  itemView.findViewById(R.id.restaurant_name);
-        restaurantName.setText(restaurant.getName());
-        //Add description of the restaurant
-        TextView restaurantDescription =  itemView.findViewById(R.id.restaurant_description);
-        restaurantDescription.setText(restaurant.getDescription());
+
+        if (restaurant != null) {
+            //Add the thumbnail image -- user Bitmap
+            ImageView image = itemView.findViewById(R.id.restaurant_image_thumb);
+            image.setImageBitmap(restaurant.getBitmap_img());
+            //Add the name of the restaurant
+            TextView restaurantName = itemView.findViewById(R.id.restaurant_name);
+            restaurantName.setText(restaurant.getName());
+            //Add description of the restaurant
+            TextView restaurantDescription = itemView.findViewById(R.id.restaurant_description);
+            restaurantDescription.setText(restaurant.getDescription());
+        }
     }
 
     @Override
@@ -113,7 +116,7 @@ public class RestaurantListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return restaurantIdsList.get(i);
     }
 
     @Override
