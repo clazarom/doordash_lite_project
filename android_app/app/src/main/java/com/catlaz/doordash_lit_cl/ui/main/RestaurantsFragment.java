@@ -20,8 +20,8 @@ import com.catlaz.doordash_lit_cl.R;
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.data.UpdatedValues;
 import com.catlaz.doordash_lit_cl.remote.RestClient;
-import com.catlaz.doordash_lit_cl.utils.APIBroadcastListener;
-import com.catlaz.doordash_lit_cl.utils.APIUpdateBroadcastReceiver;
+import com.catlaz.doordash_lit_cl.receivers.APIBroadcastListener;
+import com.catlaz.doordash_lit_cl.receivers.APIUpdateBroadcastReceiver;
 
 import java.util.List;
 import java.util.Map;

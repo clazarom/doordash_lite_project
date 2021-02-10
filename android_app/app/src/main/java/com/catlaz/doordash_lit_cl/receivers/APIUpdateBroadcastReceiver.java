@@ -1,4 +1,4 @@
-package com.catlaz.doordash_lit_cl.utils;
+package com.catlaz.doordash_lit_cl.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

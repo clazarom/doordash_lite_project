@@ -1,7 +1,5 @@
 package com.catlaz.doordash_lit_cl;
 
-import android.util.Log;
-
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
 import com.catlaz.doordash_lit_cl.ui.main.RestaurantsFragment;

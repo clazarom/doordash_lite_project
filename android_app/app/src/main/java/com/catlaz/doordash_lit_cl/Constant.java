@@ -52,4 +52,13 @@ public class Constant {
     public static final int _ZOOM_STREETS = 15;
     public static final int _ZOOM_BUILDING = 20;
 
+    //************ NOTIFICATION  *************************//
+    public static final String CHANNEL_ID = "doordash_test.cl.app";
+    public static final String CHANNEL_NAME = "DoorDash Lit(e)"; //40 characters or less
+    public static final String CHANNEL_DESCRIPTION = "Notifications from the DoorDash Lit(e) app";
+    public static final int NOTIFICATION_ID = 1;
+
+
+
+
 }

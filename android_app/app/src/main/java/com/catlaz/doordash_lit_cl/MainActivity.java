@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
 import com.catlaz.doordash_lit_cl.utils.ApplicationConfigInformation;
+import com.catlaz.doordash_lit_cl.utils.UiUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -50,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> Snackbar.make(view, getResources().getString(R.string.app_my_info), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
 
+        //Notification bar - initialize
+        UiUtils.updateStatusBarNotifications(this, "DD Lit is Running and focused", R.drawable.ic_stat_restaurant, Constant.NOTIFICATION_ID );
+
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        //If on onStop() is called, also delete notification
+        UiUtils.deleteStatusBarNotification(this);
     }
 
     /**
@@ -78,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
             if (lastFragEntry > 0) {
                 fm.popBackStackImmediate(); // go to previous fragment
             }else {
-                //Exit app, change focus out
-                moveTaskToBack(true);
+                //Exit app
+                moveTaskToBack(true); //change focus out
             }
         }
     };

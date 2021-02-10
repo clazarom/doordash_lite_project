@@ -1,5 +1,7 @@
 package com.catlaz.doordash_lit_cl.utils;
 
+import android.os.Build;
+
 import com.catlaz.doordash_lit_cl.BuildConfig;
 
 /**
@@ -26,5 +28,7 @@ public class ApplicationConfigInformation {
         return BuildConfig.DEBUG;
         //return BuildConfig.DEBUG_MODE;
     }
+
+    public static int getBuildVersion(){ return Build.VERSION.SDK_INT;}
 
 }
