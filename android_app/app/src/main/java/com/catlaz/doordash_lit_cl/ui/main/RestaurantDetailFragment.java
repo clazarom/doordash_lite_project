@@ -20,6 +20,7 @@ import com.catlaz.doordash_lit_cl.receivers.APIUpdateBroadcastReceiver;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
@@ -28,7 +29,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * @author Caterina lazaro
  * @version 1.0 Jan 2021
  */
-public class DetailFragment extends Fragment implements APIBroadcastListener {
+public class RestaurantDetailFragment extends Fragment implements APIBroadcastListener {
     private static final String _TAG= "DETAIL_FRAGMENT";
 
     //Details on UI
@@ -114,6 +115,23 @@ public class DetailFragment extends Fragment implements APIBroadcastListener {
         RestaurantDetail rDetail = UpdatedValues.Instance().getRestaurantDetailMap().get(id);
         telephoneView.setText(rDetail.getPhone_number());
         addressView.setText(rDetail.getAddress().toString());
+    }
+
+    public static FragmentTransaction makeFragmentTransaction(FragmentTransaction ft, int id, String name, String description){
+        //Make an instance of the fragment
+        RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
+        //Set up bundle data
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", id);
+        bundle.putString("name", name);
+        bundle.putString("description", description);
+        restaurantDetailFragment.setArguments(bundle);
+
+        //Fragment holder initialize
+        ft.replace(R.id.fragment_placeholder, restaurantDetailFragment, "Detail");
+        ft.addToBackStack(null);
+
+        return ft;
     }
 
 }

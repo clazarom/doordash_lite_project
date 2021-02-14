@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_restaurants"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
-    </ListView >
+    </androidx.recyclerview.widget.RecyclerView >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loading_image_layout"

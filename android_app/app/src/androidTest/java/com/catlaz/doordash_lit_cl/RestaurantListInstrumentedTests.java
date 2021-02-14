@@ -1,11 +1,13 @@
 package com.catlaz.doordash_lit_cl;
 
+import android.app.Instrumentation;
 import android.content.Context;
 
 import com.catlaz.doordash_lit_cl.data.Restaurant;
-import com.catlaz.doordash_lit_cl.ui.main.RestaurantListAdapter;
+import com.catlaz.doordash_lit_cl.ui.main.RestaurantsAdapter;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -14,6 +16,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,11 +28,14 @@ import static org.junit.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class RestaurantListInstrumentedTests {
     Context appContext;
-    RestaurantListAdapter restaurantListAdapter;
+    RestaurantsAdapter restaurantsAdapter;
+    @Rule
+    public ActivityTestRule<MainActivity> rule  = new  ActivityTestRule<>(MainActivity.class);
+
     @Before
     public void setup(){
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        restaurantListAdapter = new RestaurantListAdapter(appContext);
+        restaurantsAdapter = new RestaurantsAdapter();
     }
     @Test
     public void useAppContext() {
@@ -45,7 +51,7 @@ public class RestaurantListInstrumentedTests {
         restaurantList.add(new Restaurant(2, "howl at the moon", "italian, pasta", "url"));
         restaurantList.add(new Restaurant(3, "pagliaci", "italian, pizza", "url"));
         //Update list
-        restaurantListAdapter.updateRestaurantList(restaurantList, null);
+        restaurantsAdapter.updateRestaurantList(restaurantList, null);
         assertEquals(4, 2 + 2);
     }
 }

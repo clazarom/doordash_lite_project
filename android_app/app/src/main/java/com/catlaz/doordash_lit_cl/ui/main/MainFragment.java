@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 /**
@@ -69,6 +70,17 @@ public class MainFragment extends Fragment {
                 (tab, position) -> tab.setText(this.getResources().getString(Constant.TAB_TITLES[position]))).attach();
 
 
+    }
+
+    /**
+     * Update values of a fragment transaction to load the MainFragment
+     * @param ft fragmentTransaction
+     * @return
+     */
+    public static FragmentTransaction makeFragmentTransaction(FragmentTransaction ft){
+        ft.replace(R.id.fragment_placeholder, new MainFragment(), "main_restaurants_fragment"); // Replace the contents of the container with the new fragment
+        ft.addToBackStack(null);
+        return ft;
     }
 
     /* ****************************************

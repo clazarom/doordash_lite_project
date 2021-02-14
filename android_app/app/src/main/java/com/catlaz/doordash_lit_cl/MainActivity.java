@@ -37,11 +37,9 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        //Fragment holder initialize
+        //Fragment holder initialize with MAIN_FRAGMENT
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_placeholder, new MainFragment(), "main_restaurants_fragment"); // Replace the contents of the container with the new fragment
-        ft.addToBackStack(null);
-        ft.commit();
+        MainFragment.makeFragmentTransaction(ft).commit();
 
         //Back button navigation
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);

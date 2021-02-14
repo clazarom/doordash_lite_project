@@ -165,18 +165,23 @@ public class MainActivityInstrumentedTest {
             //onView(withId(R.id.refresh_button)).perform(click());
 
             //WAIT FOR THE LIST TO FILL: <TODO> implement idle resources
-            boolean listEmpty = true;
-            while (listEmpty) {
-                try {
-                    onData(anything())
-                            .inAdapterView(withId(R.id.list_restaurants))
-                            .atPosition(_REQ_NUM - 1)
-                            .check(matches(isDisplayed()));
-
-                    listEmpty = false;
-                }catch (java.lang.RuntimeException e){
-                    //items did not load
-                }
+//            boolean listEmpty = true;
+//            while (listEmpty) {
+//                try {
+//                    onData(anything())
+//                            .inAdapterView(withId(R.id.list_restaurants))
+//                            .atPosition(_REQ_NUM - 1)
+//                            .check(matches(isDisplayed()));
+//
+//                    listEmpty = false;
+//                }catch (java.lang.RuntimeException e){
+//                    //items did not load
+//                }
+//            }
+            try {
+                Thread.sleep(_MAX_WAIT_TIME*1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             //3. Test  click on a random item
