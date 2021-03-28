@@ -1,7 +1,10 @@
 package com.catlaz.doordash_lit_cl;
 
-import android.app.Instrumentation;
 import android.content.Context;
+
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.catlaz.doordash_lit_cl.data.Restaurant;
 import com.catlaz.doordash_lit_cl.ui.main.RestaurantsAdapter;
@@ -14,10 +17,6 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -29,14 +28,18 @@ import static org.junit.Assert.assertEquals;
 public class RestaurantListInstrumentedTests {
     Context appContext;
     RestaurantsAdapter restaurantsAdapter;
+
+    //Launch main activity
     @Rule
-    public ActivityTestRule<MainActivity> rule  = new  ActivityTestRule<>(MainActivity.class);
+    public ActivityScenarioRule<MainActivity> mainActivityTestRule  = new  ActivityScenarioRule<>(MainActivity.class);
 
     @Before
     public void setup(){
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         restaurantsAdapter = new RestaurantsAdapter();
     }
+
+
     @Test
     public void useAppContext() {
         // Context of the app under test.

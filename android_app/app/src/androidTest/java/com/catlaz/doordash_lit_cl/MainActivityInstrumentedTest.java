@@ -1,24 +1,18 @@
 package com.catlaz.doordash_lit_cl;
 
-import com.catlaz.doordash_lit_cl.data.Restaurant;
-import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
-import com.catlaz.doordash_lit_cl.ui.main.RestaurantsFragment;
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import junit.framework.AssertionFailedError;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
-
-import java.util.Map;
-
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
@@ -28,34 +22,25 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.catlaz.doordash_lit_cl.Constant._REQ_NUM;
-import static org.hamcrest.Matchers.anything;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 /**
  * Test class to verify the main activity screens load properly
  */
 public class MainActivityInstrumentedTest {
 
-    private static final int _MAX_WAIT_TIME = 15; //seconds
-    private static final String _MAIN_FRAGMENT_TAG = "main_restaurants_fragment";
-
-    MainActivity mMainActivity;
+    //Launch the main
     @Rule
-    public final ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityScenarioRule<MainActivity> mainActivityTestRule  = new  ActivityScenarioRule<>(MainActivity.class);
+    ActivityScenario<MainActivity> mainActivityScenario;
 
 
     @Before
     public void setup(){
         //Launch MainActivity
-        mMainActivity = activityTestRule.getActivity();
-        mMainActivity.getSupportFragmentManager().beginTransaction();
+        mainActivityScenario = mainActivityTestRule.getScenario();
     }
 
-    @After
-    public void clean(){
-        activityTestRule.finishActivity();
-    }
 
 
     /**
@@ -63,7 +48,7 @@ public class MainActivityInstrumentedTest {
      */
     @Test
     public void test1LaunchActivity() {
-        assertNotNull(activityTestRule.getActivity());
+        assertNotNull(mainActivityScenario);
     }
 
     /**
@@ -82,11 +67,11 @@ public class MainActivityInstrumentedTest {
 
         //The first page on view_pager should be "fragment_page_restaurant"
         try {
-            //See if loading gif is showing
+            //See if loading gif is visible
             ViewInteraction viewListInteraction = onView(withId(R.id.loading_image_layout));
             viewListInteraction.check(matches(isDisplayed()));
         }catch (AssertionFailedError afe){
-            //See if loading gif is showing
+            //See if list of restaurants is visible
             ViewInteraction viewListInteraction = onView(withId(R.id.list_restaurants));
             viewListInteraction.check(matches(isDisplayed()));
         }
@@ -125,90 +110,64 @@ public class MainActivityInstrumentedTest {
         //Click refresh button: download restaurants
         onView(withId(R.id.refresh_button)).perform(click());
 
-        //WAIT FOR THE LIST TO FILL: max acceptable waiting time
-        try {
-            Thread.sleep(_MAX_WAIT_TIME*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        boolean loading = true;
+        while (loading){
+            try {
+                //See if restaurants list is visible
+                ViewInteraction viewListInteraction = onView(withId(R.id.list_restaurants));
+                viewListInteraction.check(matches(isDisplayed()));
+                //Not loading anymore
+                loading = false;
+            }catch (AssertionFailedError afe){
+                //DO NOTHING: restaurants list loading
+            }
         }
 
         //Check restaurant list is displayed, and scroll to last item
-        onData(anything())
-                .inAdapterView(withId(R.id.list_restaurants))
-                .atPosition(_REQ_NUM -1)
-                .perform(scrollTo());
-        onData(anything())
-                .inAdapterView(withId(R.id.list_restaurants))
-                .atPosition(_REQ_NUM-1)
-                .check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.list_restaurants))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(_REQ_NUM-1, scrollTo()));
+
 
         //Test  click on first item
-        onData(anything())
-                .inAdapterView(withId(R.id.list_restaurants))
-                .atPosition(0)
-                .check(matches(isDisplayed())).perform(click());
+        onView(ViewMatchers.withId(R.id.list_restaurants))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
     }
 
     /**
      * Test the app can load the Restaurant's Details properly
      */
     @Test
-    public void test5RestaurantDetailsAndNavigation(){
-        //1. Get current fragment
-        FragmentManager fm = mMainActivity.getSupportFragmentManager();
-        if (fm.getBackStackEntryCount()>0) {
-            MainFragment mFragment = (MainFragment) fm.findFragmentByTag(_MAIN_FRAGMENT_TAG);
-            assert mFragment != null;
-            RestaurantsFragment restaurantsFragment = (RestaurantsFragment) mFragment.getCurrentPage();
-
-            //2. Click refresh button: download restaurants
-            //onView(withId(R.id.refresh_button)).perform(click());
-
-            //WAIT FOR THE LIST TO FILL: <TODO> implement idle resources
-//            boolean listEmpty = true;
-//            while (listEmpty) {
-//                try {
-//                    onData(anything())
-//                            .inAdapterView(withId(R.id.list_restaurants))
-//                            .atPosition(_REQ_NUM - 1)
-//                            .check(matches(isDisplayed()));
-//
-//                    listEmpty = false;
-//                }catch (java.lang.RuntimeException e){
-//                    //items did not load
-//                }
-//            }
+    public void test5RestaurantNavigation(){
+        //1. Wait for restaurants to load
+        boolean loading = true;
+        while (loading){
             try {
-                Thread.sleep(_MAX_WAIT_TIME*1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                //See if restaurants list is visible
+                ViewInteraction viewListInteraction = onView(withId(R.id.list_restaurants));
+                viewListInteraction.check(matches(isDisplayed()));
+                //Not loading anymore
+                loading = false;
+            }catch (AssertionFailedError afe){
+                //DO NOTHING: restaurants list loading
             }
+        }
 
-            //3. Test  click on a random item
-            int upperLimit = _REQ_NUM - 1;
-            int lowerLimit = 0;
-            int randomPosition = (int) (Math.random() * (upperLimit - lowerLimit) - lowerLimit);
-            onData(anything())
-                    .inAdapterView(withId(R.id.list_restaurants))
-                    .atPosition(randomPosition)
-                    .check(matches(isDisplayed())).perform(click());
+        //2. Test  click on a random item
+        int upperLimit = _REQ_NUM - 1;
+        int lowerLimit = 0;
+        int randomPosition = (int) (Math.random() * (upperLimit - lowerLimit) - lowerLimit);
+        onView(ViewMatchers.withId(R.id.list_restaurants))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(randomPosition, click()));
 
-            //4. Check details restaurant is displayed:
-            onView(withId(R.id.fragment_rest_detail)).check(matches(isDisplayed()));
-            //Also, check that the data display matches the Restaurant
-            int idClicked = (int) restaurantsFragment.getRestaurantListAdapter().getItemId(randomPosition);
-            Map<Integer, Restaurant> restaurantsMap = restaurantsFragment.getRestaurantListAdapter().getRestaurantsMap();
-            Restaurant restaurant = restaurantsMap.get(idClicked);
+        //3. Check details restaurant is displayed:
+        onView(withId(R.id.fragment_rest_detail)).check(matches(isDisplayed()));
 
-            onView(withId(R.id.restaurant_name_detail)).check(matches(withText(restaurant.getName())));
-            onView(withId(R.id.restaurant_description_detail)).check(matches(withText(restaurant.getDescription())));
+        //4.Go back to restaurants list
+        Espresso.pressBack();
+        onView(withId(R.id.fragment_page_restaurants)).check(matches(isDisplayed()));
 
-            //5.Go back to restaurants list
-            Espresso.pressBack();
-            onView(withId(R.id.fragment_page_restaurants)).check(matches(isDisplayed()));
-
-        }else
-            fail(); // app was not started properly
     }
 
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.catlaz.doordash_lit_cl.ui.main.MainFragment;
+import com.catlaz.doordash_lit_cl.ui.main.PagesFragment;
 import com.catlaz.doordash_lit_cl.utils.ApplicationConfigInformation;
 import com.catlaz.doordash_lit_cl.utils.UiUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Fragment holder initialize with MAIN_FRAGMENT
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        MainFragment.makeFragmentTransaction(ft).commit();
+        PagesFragment.makeFragmentTransaction(ft).commit();
 
         //Back button navigation
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);

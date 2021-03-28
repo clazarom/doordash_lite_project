@@ -87,7 +87,7 @@ During Espresso tests, it may happen that, when anitmations or transitions are e
 To fix:
 Disable animations to improve performance: 
 - Go to Settings > System > Advanced > Developer Options > (scroll down to Drawing section) Window animation scale, Transition animation scale, and Animator duration scale.
-- Tap to turn off/speed up all animations options {Window animation scale, Transition animation scale, Animation duration scale}
+- Tap to turn off/speed up all three animation options {Window animation scale, Transition animation scale, Animation duration scale}.
 }
 
 3) PerformException: Error performing 'load adapter data' 
@@ -95,6 +95,13 @@ On "testLoadRestaurants", the restaurants will not load fast enough... causing t
 
 4) Never ending test5RestaurantDetailAndNavigation
 If the listview is never filled with values, this test will continue to run (infinite loop)
+
+5) Espresso setup error:  androidx.test.espresso.PerformException
+"Error performing 'load adapter data' on view 'Animations or transitions are enabled on the target device.
+To fix:
+Enable Android animatins in the smartphone:
+- Go to Settings > System > Advance > Developer Options 
+- Tap to turn off/ set all three animation options {Window animation scale, Transition animation scale, Animation duration scale} 
  
 
 

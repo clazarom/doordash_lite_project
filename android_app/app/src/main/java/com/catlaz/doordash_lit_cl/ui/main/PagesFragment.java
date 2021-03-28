@@ -25,12 +25,12 @@ import androidx.viewpager2.widget.ViewPager2;
  * @author Caterina Lazaro
  * @version 1.0 Jan 2021
  */
-public class MainFragment extends Fragment {
+public class PagesFragment extends Fragment {
     private static final String _TAG = "MAIN_FRAGMENT";
 
     //Pager
-    FragmentPagesCollectionAdapter fragmentPagesCollectionAdapter;
-    ViewPager2 viewPager;
+    public PagesCollectionAdapter pagesCollectionAdapter;
+    private ViewPager2 viewPager;
 
     /**
      * Get the fragment currently being displayed
@@ -54,10 +54,10 @@ public class MainFragment extends Fragment {
 
 
         //Initialize ViewPager2
-        fragmentPagesCollectionAdapter = new FragmentPagesCollectionAdapter(this, Constant.fragmentPages);
+        pagesCollectionAdapter = new PagesCollectionAdapter(this, Constant.fragmentPages);
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        viewPager.setAdapter(fragmentPagesCollectionAdapter);
+        viewPager.setAdapter(pagesCollectionAdapter);
         viewPager.registerOnPageChangeCallback(onPageChangeCallback);
         view.getParent().requestDisallowInterceptTouchEvent(false); //allow scrolling for the listview inside the viewpager
         //More about the issue and workarounds
@@ -75,11 +75,11 @@ public class MainFragment extends Fragment {
     /**
      * Update values of a fragment transaction to load the MainFragment
      * @param ft fragmentTransaction
-     * @return
+     * @return FragmentTransaction
      */
     public static FragmentTransaction makeFragmentTransaction(FragmentTransaction ft){
-        ft.replace(R.id.fragment_placeholder, new MainFragment(), "main_restaurants_fragment"); // Replace the contents of the container with the new fragment
-        ft.addToBackStack(null);
+        ft.replace(R.id.fragment_placeholder, new PagesFragment(), Constant._PAGES_FRAGMENT_TAG); // Replace the contents of the container with the new fragment
+        ft.addToBackStack(null); // no name for the backStack state
         return ft;
     }
 

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * local unit tests for the app functionality.
  * - Check  functionality of ViewPager
- * - Check functionality of Restaurants ListVies
+ * - Check functionality of Restaurants ListViews
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */

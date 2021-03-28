@@ -14,7 +14,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
  * @author Caterina Lazaro
  * @version Jan 2021
  */
-public class FragmentPagesCollectionAdapter extends FragmentStateAdapter {
+public class PagesCollectionAdapter extends FragmentStateAdapter {
     final List<Fragment> pagesList;
 
     /**
@@ -22,7 +22,7 @@ public class FragmentPagesCollectionAdapter extends FragmentStateAdapter {
      * @param fragment fragment
      * @param pagesList list of fragment pages
      */
-    public FragmentPagesCollectionAdapter(@NonNull Fragment fragment, List<Fragment> pagesList) {
+    public PagesCollectionAdapter(@NonNull Fragment fragment, List<Fragment> pagesList) {
         super(fragment);
         this.pagesList = pagesList;
     }

@@ -45,6 +45,9 @@ public class Constant {
             new ArrayList<Fragment>(){{add(new RestaurantsFragment()); add(new MapFragment()); }});
     @StringRes
     public static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2}; // Tab names
+    //Fragments keys
+    public static final String _PAGES_FRAGMENT_TAG = "pagesFragmentKey";
+    //public static final String  _RESTAURANTS_FRAGMENT_KEY = "restaurantsFragmentKey";
 
     //Map Fragment
     public static final int _ZOOM_WORLD = 1;
